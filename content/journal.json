@@ -1,0 +1,32 @@
+[
+  {
+    "id": "post-design-system",
+    "slug": "building-the-boatek-labs-design-system",
+    "title": "Building the Boatek Labs design system",
+    "excerpt": "How we translated a geometric brand identity into a real component library.",
+    "body": "When we set out to build Boatek Labs' visual identity, the goal was never to look flashy for its own sake — it was to make the geometry mean something. Every hexagon, every circuit trace, every diamond marker on this site is meant to reinforce the same idea: modular systems that connect into something bigger, whether that's a team of specialists or a set of composable product features.\n\nWe started with the shape language before touching a single line of layout CSS. The hex node became our primary connector — used for bullet markers, section dividers, and the scroll-spy badge that tracks your position down the left rail as you read. Diamonds were deliberately reserved only for timeline and process moments, so they'd never compete with the hex as the dominant shape.\n\nColor followed the same discipline: deep navy as the default canvas, cyan for anything interactive, purple for the creative/games side of what we build, and orange used so sparingly that it still reads as a genuine call to attention rather than decoration.\n\nThe hardest part wasn't picking the palette — it was making the motion feel calm instead of gimmicky. Circuit paths draw themselves in rather than fading, hex nodes pulse once on hover instead of glowing indefinitely, and the whole site intentionally avoids aggressive scroll-jacking. Restraint turned out to be the actual design decision worth obsessing over.",
+    "tags": ["Design", "Brand"],
+    "featured": true,
+    "publishedAt": "2026-03-10T00:00:00.000Z"
+  },
+  {
+    "id": "post-ytdlp-bug",
+    "slug": "fixing-the-yt-dlp-format-selector-bug",
+    "title": "Fixing the yt-dlp format selector bug",
+    "excerpt": "Notes from debugging VidPull Pro AI's trickiest format-selection edge case.",
+    "body": "VidPull Pro AI runs on yt-dlp under the hood, and for months it handled format selection just fine — until a specific class of videos started silently downloading in the wrong resolution. No errors, no crashes, just a video that should have been 1080p coming through at 360p.\n\nThe root cause turned out to be a mismatch between how yt-dlp reports available format combinations for videos with separate audio/video streams versus videos with a single combined stream. Our format selector was written assuming every video exposed a consistent format ladder, and that assumption quietly broke on a subset of sources that structure their manifests differently.\n\nThe fix involved rewriting the selector to probe the actual format list returned per-video rather than assuming a fixed pattern, and falling back gracefully when the preferred combination wasn't available.\n\nSmall bug, but the kind that erodes trust fast if it goes unnoticed — worth the half-day it took to actually track down.",
+    "tags": ["Node.js", "Debugging"],
+    "featured": false,
+    "publishedAt": "2026-03-18T00:00:00.000Z"
+  },
+  {
+    "id": "post-studio-announcement",
+    "slug": "boatek-labs-studio-announcement",
+    "title": "Boatek Labs: Studio Announcement",
+    "excerpt": "Introducing Boatek Labs as a creative technology studio — software, games, and digital experiences.",
+    "body": "We're formally introducing Boatek Labs: a creative technology studio building software, games, and digital experiences.\n\nWe're intentionally not positioning ourselves as an AI company. AI shows up in some of what we build when it's the right tool for the job, but it isn't the point of the studio. The point is the intersection of engineering discipline and creative craft.\n\nThe team is small and cross-disciplinary on purpose: a founder handling web development and product strategy, a Python engineer covering backend and infrastructure, a game developer and 3D artist, and a creative collaborator helping shape product direction. We're actively hiring a graphic designer to round out the team.\n\nThis site itself is the first real deliverable — not a placeholder, not a template, but a fully working platform with a real backend, a real admin dashboard, and real content behind every page.",
+    "tags": ["Press"],
+    "featured": false,
+    "publishedAt": "2026-01-05T00:00:00.000Z"
+  }
+]

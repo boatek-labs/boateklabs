@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home — Boatek Labs</title>
+<meta name="description" content="Boatek Labs is a creative technology studio building software, games, and digital experiences.">
+<meta name="theme-color" content="#070B14">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Boatek Labs">
+<meta property="og:title" content="Home — Boatek Labs">
+<meta property="og:description" content="Boatek Labs is a creative technology studio building software, games, and digital experiences.">
+<meta property="og:image" content="assets/icon-512.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Home — Boatek Labs">
+<meta name="twitter:description" content="Boatek Labs is a creative technology studio building software, games, and digital experiences.">
+<meta name="twitter:image" content="assets/icon-512.png">
+
+<link rel="alternate" type="application/rss+xml" title="Boatek Labs Journal" href="/rss.xml">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<div class="scroll-rail">
+  <div class="rail-line"></div>
+  <div class="rail-tick" style="top:0%"></div>
+  <div class="rail-tick" style="top:25%"></div>
+  <div class="rail-tick" style="top:50%"></div>
+  <div class="rail-tick" style="top:75%"></div>
+  <div class="rail-tick" style="top:100%"></div>
+  <div class="rail-badge" id="railBadge"><i class="fas fa-home"></i></div>
+</div>
+<header>
+  <div class="topbar">
+    <div class="now-building"><span class="dot"></span>Status: <span class="mono" id="statusMessageText" style="color:var(--text)">Loading...</span></div>
+    <div class="right-links">
+      <span id="searchTrigger" onclick="openSearch()"><i class="fas fa-magnifying-glass"></i> <span class="label-text">Search</span></span>
+      <a href="work.html#case-studies" class="case-studies-link" style="display:flex; align-items:center; gap:6px; color:inherit;"><i class="fas fa-layer-group"></i> Case Studies</a>
+      <span id="themeToggle"><i class="fas fa-sun"></i> Light</span>
+    </div>
+  </div>
+  <div class="header-inner">
+    <a href="index.html" class="logo"><img src="assets/logo.jpg" alt="Boatek Labs"><span class="bracket">&lt;</span>BOATEK LABS<span class="bracket">&gt;</span></a>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()"><i class="fas fa-bars"></i></button>
+  </div>
+  <nav class="primary">
+    <div class="nav-item" onclick="toggleMobileSubmenu(this)"><a href="team.html#story">Studio</a>
+      <div class="mega">
+        <h4>Studio</h4><div class="accent-line"></div>
+        <div class="mega-grid">
+          <a href="team.html#story"><span class="dot-leader"></span>Our Story</a>
+          <a href="team.html#vision"><span class="dot-leader"></span>Vision &amp; Mission</a>
+          <a href="team.html#values"><span class="dot-leader"></span>Studio Values</a>
+          <a href="team.html#process"><span class="dot-leader"></span>How We Work</a>
+          <a href="journal.html#press"><span class="dot-leader"></span>Press &amp; Media</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item" onclick="toggleMobileSubmenu(this)"><a href="work.html">Work</a>
+      <div class="mega">
+        <h4>Work</h4><div class="accent-line"></div>
+        <div class="mega-grid">
+          <a href="work.html#featured"><span class="dot-leader"></span>Featured Projects</a>
+          <a href="work.html#case-studies"><span class="dot-leader"></span>Case Studies</a>
+          <a href="software.html"><span class="dot-leader"></span>Software Products</a>
+          <a href="collaborate.html"><span class="dot-leader"></span>Client Collaborations</a>
+          <a href="games.html"><span class="dot-leader"></span>Game Titles</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item" onclick="toggleMobileSubmenu(this)"><a href="games.html">Games</a>
+      <div class="mega">
+        <h4>Games</h4><div class="accent-line"></div>
+        <div class="mega-grid">
+          <a href="games.html#current"><span class="dot-leader"></span>Current Titles</a>
+          <a href="games.html#development"><span class="dot-leader"></span>In Development</a>
+          <a href="games.html#prototypes"><span class="dot-leader"></span>Prototypes</a>
+          <a href="games.html#art"><span class="dot-leader"></span>Art &amp; Animation</a>
+          <a href="games.html#demos"><span class="dot-leader"></span>Play Demos</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item" onclick="toggleMobileSubmenu(this)"><a href="software.html">Software</a>
+      <div class="mega">
+        <h4>Software</h4><div class="accent-line"></div>
+        <div class="mega-grid">
+          <a href="software.html#products"><span class="dot-leader"></span>Products</a>
+          <a href="software.html#saas"><span class="dot-leader"></span>SaaS Tools</a>
+          <a href="software.html#education"><span class="dot-leader"></span>Educational Software</a>
+          <a href="software.html#open-source"><span class="dot-leader"></span>Open Source</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item" onclick="toggleMobileSubmenu(this)"><a href="team.html">Team</a>
+      <div class="mega">
+        <h4>Team</h4><div class="accent-line"></div>
+        <div class="mega-grid">
+          <a href="team.html#meet"><span class="dot-leader"></span>Meet the Team</a>
+          <a href="join-the-team.html"><span class="dot-leader"></span>We're Hiring</a>
+          <a href="team.html#culture"><span class="dot-leader"></span>Culture</a>
+          <a href="team.html#roles"><span class="dot-leader"></span>Roles &amp; Disciplines</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item"><a href="journal.html">Journal</a></div>
+    <div class="nav-item"><a href="contact.html">Contact Us</a></div>
+  </nav>
+</header>
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-overlay-inner">
+    <button class="search-close" onclick="closeSearch()">&times;</button>
+    <div class="search-input-wrap">
+      <i class="fas fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="Search projects, devlogs, people..." oninput="runSiteSearch(this.value)" autocomplete="off">
+    </div>
+    <div class="search-quick-links">
+      <a href="games.html" class="search-chip">Games</a>
+      <a href="software.html" class="search-chip">Software</a>
+      <a href="team.html" class="search-chip">Team</a>
+      <a href="journal.html" class="search-chip">Journal</a>
+    </div>
+    <div id="searchResults" class="search-results"></div>
+  </div>
+</div>
+
+<section class="hero relwrap" data-rail data-icon="home">
+  <div class="wedge wedge-bl"></div>
+  <div class="wedge wedge-br"></div>
+  <div class="wrap hero-centered">
+    <div class="eyebrow"><span class="line"></span>CREATIVE TECHNOLOGY STUDIO<span class="line"></span></div>
+
+    <div class="hero-wordmark-wrap">
+      <svg class="wordmark-ring" viewBox="0 0 340 340" preserveAspectRatio="xMidYMid meet">
+        <polygon points="170,20 290,90 290,250 170,320 50,250 50,90" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+        <circle cx="170" cy="20" r="3.5" fill="#fff"/><circle cx="290" cy="90" r="3.5" fill="#fff"/>
+        <circle cx="290" cy="250" r="3.5" fill="#fff"/><circle cx="170" cy="320" r="3.5" fill="#fff"/>
+        <circle cx="50" cy="250" r="3.5" fill="#fff"/><circle cx="50" cy="90" r="3.5" fill="#fff"/>
+        <g style="animation:rotslow 22s linear infinite; transform-origin:170px 170px;">
+          <circle cx="170" cy="170" r="150" fill="none" stroke="var(--cyan)" stroke-width="1" stroke-dasharray="5 7" opacity="0.7"/>
+        </g>
+        <g style="animation:rotslow 30s linear infinite reverse; transform-origin:170px 170px;">
+          <circle cx="170" cy="170" r="128" fill="none" stroke="var(--purple)" stroke-width="1" stroke-dasharray="3 9" opacity="0.5"/>
+        </g>
+      </svg>
+      <img class="wordmark-logo" src="assets/logo.jpg" alt="Boatek Labs logo">
+    </div>
+
+    <p class="lead">Engineering meets imagination. We build software, games, and digital experiences — engineered like products, designed like experiences.</p>
+    <div class="hero-ctas">
+      <a href="work.html" class="btn btn-primary">See Our Work &rarr;</a>
+      <a href="start-a-project.html" class="btn btn-ghost">Start a Project</a>
+    </div>
+  </div>
+</section>
+
+<div class="subbar"><div class="wrap"><a href="index.html">Home</a> &raquo; What We Build</div></div>
+
+<section class="relwrap" id="services" data-rail data-icon="th-large">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-marker"><div class="marker-diamond"></div><div class="marker-line"></div><div class="marker-chevron"></div></div>
+      <h2>What We Build</h2>
+      <p>Three disciplines, drawn from the same core capability — engineering, design, and craft, assembled differently depending on what's being built.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="tabs-layout">
+      <div class="tab-list">
+        <div class="tab-item active" onclick="showTab('software', this)">Software</div>
+        <div class="tab-item" onclick="showTab('games', this)">Games</div>
+        <div class="tab-item" onclick="showTab('experiences', this)">Experiences</div>
+        <div class="tab-item" onclick="showTab('process', this)">How We Work</div>
+      </div>
+      <div>
+        <div class="tab-content software active">
+          <div>
+            <span class="tag">Software</span>
+            <h3>Tools people rely on</h3>
+            <p>SaaS products, educational platforms, and internal systems built with Node.js, Python, and real infrastructure discipline.</p>
+            <a class="go-link" href="software.html">Explore Software &#8599;</a>
+          </div>
+          <div class="tab-visual" style="background:linear-gradient(135deg,#101c3a,#3B82F6);">
+            <svg viewBox="0 0 200 160" width="70%"><polygon points="100,10 180,55 180,120 100,150 20,120 20,55" fill="none" stroke="rgba(255,255,255,0.6)"/><circle cx="100" cy="82" r="18" fill="rgba(255,255,255,0.2)"/></svg>
+          </div>
+        </div>
+        <div class="tab-content games">
+          <div>
+            <span class="tag">Games</span>
+            <h3>Worlds people return to</h3>
+            <p>Indie titles and educational games built with the same 3D and animation craft as any dedicated game studio.</p>
+            <a class="go-link" href="games.html">Explore Games &#8599;</a>
+          </div>
+          <div class="tab-visual" style="background:linear-gradient(135deg,#241a44,#8B5CF6);">
+            <svg viewBox="0 0 200 160" width="70%"><polygon points="100,10 180,55 180,120 100,150 20,120 20,55" fill="none" stroke="rgba(255,255,255,0.6)"/><circle cx="100" cy="82" r="18" fill="rgba(255,255,255,0.2)"/></svg>
+          </div>
+        </div>
+        <div class="tab-content experiences">
+          <div>
+            <span class="tag">Experiences</span>
+            <h3>Moments people remember</h3>
+            <p>Interactive experiences that sit between software and play — installations, tools, and digital-first storytelling.</p>
+            <a class="go-link" href="work.html">Explore Experiences &#8599;</a>
+          </div>
+          <div class="tab-visual" style="background:linear-gradient(135deg,#0f2a2e,#22D3EE);">
+            <svg viewBox="0 0 200 160" width="70%"><polygon points="100,10 180,55 180,120 100,150 20,120 20,55" fill="none" stroke="rgba(255,255,255,0.6)"/><circle cx="100" cy="82" r="18" fill="rgba(255,255,255,0.2)"/></svg>
+          </div>
+        </div>
+        <div class="tab-content process">
+          <div>
+            <span class="tag" style="color:var(--orange); border-color:var(--orange);">Process</span>
+            <h3>A clear, honest process</h3>
+            <p>We review your brief, scope together, then build with engineering and design moving in the same sprint.</p>
+            <a class="go-link" href="team.html#process">See How We Work &#8599;</a>
+          </div>
+          <div class="tab-visual" style="background:linear-gradient(135deg,#2a1f10,#F97316);">
+            <svg viewBox="0 0 200 160" width="70%"><polygon points="100,10 180,55 180,120 100,150 20,120 20,55" fill="none" stroke="rgba(255,255,255,0.6)"/><circle cx="100" cy="82" r="18" fill="rgba(255,255,255,0.2)"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="relwrap" data-rail data-icon="bolt">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-marker"><div class="marker-diamond"></div><div class="marker-line"></div><div class="marker-chevron"></div></div>
+      <h2>Why Boatek Labs?</h2>
+      <p>A small studio, built to punch above its weight — cross-disciplinary by design, not by accident.</p>
+    </div>
+    <div class="pill-row">
+      <div class="pill-wrap"><div class="pill">Full-Stack Capability</div><div class="pill-connector"></div></div>
+      <div class="pill-wrap"><div class="pill">Game-Studio Craft</div><div class="pill-connector"></div></div>
+      <div class="pill-wrap"><div class="pill">Engineering Discipline</div></div>
+      <div class="pill-wrap"><div class="pill">Ghana-Rooted, Global-Minded</div><div class="pill-connector"></div></div>
+      <div class="pill-wrap"><div class="pill">Composable Systems</div><div class="pill-connector"></div></div>
+      <div class="pill-wrap"><div class="pill">Restrained Design</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-marker"><div class="marker-diamond"></div><div class="marker-line"></div><div class="marker-chevron"></div></div>
+      <h2>Built With</h2>
+      <p>The tools and stacks behind our work.</p>
+    </div>
+    <div class="diamond-stats">
+      <div class="dstat a"><div class="dstat-inner">Node.js</div></div>
+      <div class="dstat-connector"></div>
+      <div class="dstat b"><div class="dstat-inner">Unity</div></div>
+      <div class="dstat-connector"></div>
+      <div class="dstat c"><div class="dstat-inner">Python</div></div>
+      <div class="dstat-connector"></div>
+      <div class="dstat d"><div class="dstat-inner">WebGL</div></div>
+    </div>
+  </div>
+</section>
+
+<section data-rail data-icon="briefcase">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-marker"><div class="marker-diamond"></div><div class="marker-line"></div><div class="marker-chevron"></div></div>
+      <h2>Featured Work</h2>
+    </div>
+    <div class="work-grid" id="projectGridHome">
+      <div class="work-card"><div class="work-thumb a">Loading...</div><div class="work-body"><h4>Loading projects...</h4><p>&nbsp;</p></div></div>
+    </div>
+    <div style="text-align:center; margin-top:40px;"><a href="work.html" class="btn btn-ghost">See All Work &rarr;</a></div>
+  </div>
+</section>
+
+<section data-rail data-icon="briefcase">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-marker"><div class="marker-diamond"></div><div class="marker-line"></div><div class="marker-chevron"></div></div>
+      <h2>From the Journal</h2>
+    </div>
+    <div class="work-grid" id="journalGridHome">
+      <div class="work-card"><div class="work-thumb a">Loading...</div><div class="work-body"><h4>Loading posts...</h4><p>&nbsp;</p></div></div>
+    </div>
+    <div style="text-align:center; margin-top:40px;"><a href="journal.html" class="btn btn-ghost">Read the Journal &rarr;</a></div>
+  </div>
+</section>
+
+<section data-rail data-icon="users">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-marker"><div class="marker-diamond"></div><div class="marker-line"></div><div class="marker-chevron"></div></div>
+      <h2>Small Team, Full-Stack Capability</h2>
+    </div>
+    <div class="team-grid" id="teamGridHome">
+      <div class="team-card"><div class="avatar"></div><h4>Loading team...</h4><div class="role">&nbsp;</div></div>
+    </div>
+  </div>
+</section>
+
+
+<section class="donation-section" id="support">
+  <div class="wrap donation-layout">
+    <div class="donation-copy">
+      <div class="section-marker"><div class="marker-diamond"></div><div class="marker-line"></div><div class="marker-chevron"></div></div>
+      <p class="donation-kicker">Support independent creation</p>
+      <h2>Help us keep<br><span>building what's next.</span></h2>
+      <p>Every contribution helps us experiment, learn, and create useful digital experiences—from software and tools to games and community projects.</p>
+      <div class="donation-tags"><span>Software</span><span>Experiments</span><span>Community</span></div>
+    </div>
+    <form class="donation-card" id="donationForm" onsubmit="return handleDonation(event)">
+      <h3>Fuel the next idea</h3><p>Choose an amount to contribute.</p>
+      <div class="donation-amounts">
+        <button type="button" data-amount="10">GH₵10</button><button type="button" data-amount="20">GH₵20</button><button type="button" data-amount="50">GH₵50</button><button type="button" data-amount="100">GH₵100</button>
+      </div>
+      <label class="donation-label" for="donationAmount">Custom amount (GHS)</label><input id="donationAmount" type="number" min="1" max="5000" step="1" placeholder="Enter amount" required>
+      <label class="donation-label" for="donationEmail">Email for receipt</label><input id="donationEmail" type="email" placeholder="you@email.com" required>
+      <button class="btn-hex donation-submit" type="submit">Continue to Paystack <i class="fas fa-arrow-right"></i></button>
+      <p class="donation-note">Secure payment processing by Paystack. Your payment details are never stored on our site.</p>
+      <div class="donation-msg" id="donationMessage" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<section data-rail data-icon="envelope">
+  <div class="cta-banner">
+    <svg class="netlines" viewBox="0 0 800 300" preserveAspectRatio="none">
+      <line x1="0" y1="300" x2="300" y2="0" stroke="#fff" stroke-width="1"/>
+      <line x1="100" y1="300" x2="400" y2="0" stroke="#fff" stroke-width="1"/>
+      <line x1="250" y1="300" x2="550" y2="0" stroke="#fff" stroke-width="1"/>
+      <line x1="400" y1="300" x2="700" y2="0" stroke="#fff" stroke-width="1"/>
+      <line x1="550" y1="300" x2="800" y2="0" stroke="#fff" stroke-width="1"/>
+      <circle cx="300" cy="60" r="3" fill="#fff"/><circle cx="550" cy="140" r="3" fill="#fff"/><circle cx="150" cy="200" r="3" fill="#fff"/>
+    </svg>
+    <div class="cta-banner-inner">
+      <h2>Have something worth building?</h2>
+      <p>Tell us what you're imagining — we'll tell you how we'd build it.</p>
+      <a href="start-a-project.html" class="btn-hex">Start Something With Us</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <svg class="footer-trace" width="100%" height="1"><line x1="0" y1="0" x2="100%" y2="0" stroke="#22D3EE" stroke-opacity="0.15"/></svg>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo" style="margin-bottom:14px; text-decoration:none;"><img src="assets/logo.jpg" alt="Boatek Labs" style="width:30px;height:30px;border-radius:50%;object-fit:cover;"><span class="bracket" style="color:#22D3EE">&lt;</span>BOATEK LABS<span class="bracket" style="color:#22D3EE">&gt;</span></a>
+        <p>Engineering meets imagination. A creative technology studio building software, games, and digital experiences.</p>
+        <div class="socials">
+          <a class="social-dot" id="socialLinkedin" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a class="social-dot" id="socialX" href="#" target="_blank" rel="noopener" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+          <a class="social-dot" id="socialGithub" href="#" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <div><h5>Explore</h5><a href="work.html">Work</a><a href="games.html">Games</a><a href="software.html">Software</a><a href="journal.html">Journal</a></div>
+      <div><h5>Studio</h5><a href="team.html#meet">Team</a><a href="join-the-team.html">Careers</a><a href="contact.html">Contact</a><a href="team.html#values">Studio Values</a></div>
+      <div>
+        <h5>Stay Connected</h5>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:0;">Devlogs &amp; studio updates, no spam.</p>
+        <form class="newsletter-input" onsubmit="return handleNewsletterSubmit(event)">
+          <input type="text" name="website" style="position:absolute; left:-9999px; width:1px; height:1px;" tabindex="-1" autocomplete="off">
+          <input type="email" placeholder="you@email.com" required>
+          <button type="submit"><i class="fas fa-arrow-right"></i></button>
+        </form>
+        <div class="newsletter-msg" style="display:none; font-size:12px; margin-top:8px;"></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span class="mono">&copy; 2026 Boatek Labs — Built with intent.</span><span><a href="privacy.html">Privacy Policy</a></span></div>
+  </div>
+</footer>
+<div class="signal-capsule">
+  <a href="start-a-project.html" class="capsule-seg primary" style="text-decoration:none;">Start a Project</a>
+  <div class="capsule-divider"><div class="node-dot"></div></div>
+  <div class="capsule-seg ghost" id="openChat">Message Us</div>
+</div>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<div class="chat-drawer" id="chatDrawer">
+  <span class="drawer-close" id="closeChat">&times;</span>
+  <h4>Message Boatek Labs</h4>
+  <div class="sub">We usually reply within a day.</div>
+  <div id="chatThread" style="max-height:220px; overflow-y:auto; margin-bottom:6px;">
+    <div class="chat-bubble">Hey! What are you looking to build — software, a game, or something else?</div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter'){event.preventDefault(); sendChatMessage();}">
+    <button type="button" onclick="sendChatMessage()"><i class="fas fa-arrow-right"></i></button>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

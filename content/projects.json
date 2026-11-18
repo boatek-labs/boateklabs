@@ -1,0 +1,219 @@
+[
+  {
+    "id": "proj-tarsco",
+    "title": "TARSCO Robotics Platform",
+    "category": "software",
+    "description": "Full-stack STEM club platform with animated hero, SVG robotics decorations, and an OpenRouter AI chat integration.",
+    "techStack": [
+      "Node.js",
+      "Express",
+      "LowDB"
+    ],
+    "featured": true,
+    "link": "",
+    "githubOrg": "",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "a",
+    "clientPortal": {
+      "enabled": false,
+      "accessCode": "",
+      "updates": []
+    },
+    "createdAt": "2026-01-10T00:00:00.000Z"
+  },
+  {
+    "id": "proj-cubecoach",
+    "title": "CubeCoach",
+    "category": "games",
+    "description": "AI-coached Rubik's Cube game with real-time guidance and progress tracking.",
+    "techStack": [
+      "JavaScript",
+      "AI"
+    ],
+    "featured": true,
+    "link": "",
+    "githubOrg": "",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "b",
+    "clientPortal": {
+      "enabled": false,
+      "accessCode": "",
+      "updates": []
+    },
+    "createdAt": "2026-01-15T00:00:00.000Z",
+    "images": []
+  },
+  {
+    "id": "proj-motionai",
+    "title": "MotionAI Studio",
+    "category": "software",
+    "description": "Canvas-based animation app with AI scene generation and live collaboration.",
+    "techStack": [
+      "Socket.IO",
+      "WebGL"
+    ],
+    "featured": true,
+    "link": "",
+    "githubOrg": "",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "c",
+    "clientPortal": {
+      "enabled": false,
+      "accessCode": "",
+      "updates": []
+    },
+    "createdAt": "2026-01-20T00:00:00.000Z"
+  },
+  {
+    "id": "proj-vidpull",
+    "title": "VidPull Pro AI",
+    "category": "software",
+    "description": "Video downloader app with custom yt-dlp format selectors and AI role integration.",
+    "techStack": [
+      "Node.js",
+      "yt-dlp"
+    ],
+    "featured": false,
+    "link": "",
+    "githubOrg": "",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "a",
+    "clientPortal": {
+      "enabled": false,
+      "accessCode": "",
+      "updates": []
+    },
+    "createdAt": "2026-02-01T00:00:00.000Z"
+  },
+  {
+    "id": "proj-fostaudit",
+    "title": "Fost Audit AI",
+    "category": "software",
+    "description": "AI-powered software QA platform with eight specialist AI reviewer roles.",
+    "techStack": [
+      "Puppeteer",
+      "LowDB"
+    ],
+    "featured": false,
+    "link": "",
+    "githubOrg": "",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "b",
+    "clientPortal": {
+      "enabled": false,
+      "accessCode": "",
+      "updates": []
+    },
+    "createdAt": "2026-02-05T00:00:00.000Z"
+  },
+  {
+    "id": "proj-church",
+    "title": "Church Attendance System",
+    "category": "software",
+    "description": "Facial recognition and QR check-in system across six user roles.",
+    "techStack": [
+      "Node.js",
+      "Face Recognition"
+    ],
+    "featured": false,
+    "link": "https://github.com/Huniso-Church-Of-Pentecost",
+    "githubOrg": "Huniso-Church-Of-Pentecost",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "c",
+    "clientPortal": {
+      "enabled": true,
+      "accessCode": "church2026",
+      "updates": [
+        {
+          "date": "2026-02-10T00:00:00.000Z",
+          "text": "Initial deployment completed at the Huniso District office."
+        }
+      ]
+    },
+    "createdAt": "2026-02-10T00:00:00.000Z"
+  },
+  {
+    "id": "proj-intellern",
+    "title": "Intellern",
+    "category": "software",
+    "description": "AI-powered educational web app spanning Primary, JHS, SHS, and University levels.",
+    "techStack": [
+      "Node.js",
+      "AI"
+    ],
+    "featured": false,
+    "link": "",
+    "githubOrg": "",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "a",
+    "clientPortal": {
+      "enabled": false,
+      "accessCode": "",
+      "updates": []
+    },
+    "createdAt": "2026-02-15T00:00:00.000Z"
+  },
+  {
+    "id": "proj-edumind",
+    "title": "EduMind v3",
+    "category": "software",
+    "description": "AI educational platform with a robust JSON repair pipeline.",
+    "techStack": [
+      "AI",
+      "Node.js"
+    ],
+    "featured": false,
+    "link": "",
+    "githubOrg": "",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "b",
+    "clientPortal": {
+      "enabled": false,
+      "accessCode": "",
+      "updates": []
+    },
+    "createdAt": "2026-02-20T00:00:00.000Z"
+  },
+  {
+    "id": "proj-francirene",
+    "title": "Francirene Educational Consult",
+    "category": "software",
+    "description": "Full-stack redesign with Admin/Student/Parent dashboards and a fintech-inspired design system.",
+    "techStack": [
+      "Node.js",
+      "Dark Mode"
+    ],
+    "featured": false,
+    "link": "",
+    "githubOrg": "",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "c",
+    "clientPortal": {
+      "enabled": false,
+      "accessCode": "",
+      "updates": []
+    },
+    "createdAt": "2026-03-01T00:00:00.000Z"
+  },
+  {
+    "id": "proj-ultradatahub",
+    "title": "Ultra Data Hub",
+    "category": "software",
+    "description": "Mobile data bundle reselling platform with agent storefronts and Paystack integration.",
+    "techStack": [
+      "Node.js",
+      "Paystack"
+    ],
+    "featured": false,
+    "link": "",
+    "githubOrg": "",
+    "thumbnailUrl": "",
+    "thumbnailVariant": "a",
+    "clientPortal": {
+      "enabled": false,
+      "accessCode": "",
+      "updates": []
+    },
+    "createdAt": "2026-03-05T00:00:00.000Z"
+  }
+]

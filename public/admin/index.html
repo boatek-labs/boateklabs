@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Boatek Labs</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="logo-row"><img src="../assets/logo.jpg" alt="Boatek Labs"><strong>Boatek Labs</strong></div>
+    <h1>Admin Dashboard</h1>
+    <p class="sub">Sign in to manage submissions, site config, projects, and team info.</p>
+    <div class="login-error" id="loginError"></div>
+    <form onsubmit="return handleAdminLogin(event)">
+      <label for="adminEmail">Email</label>
+      <input type="email" id="adminEmail" required autocomplete="username">
+      <label for="adminPassword">Password</label>
+      <input type="password" id="adminPassword" required autocomplete="current-password">
+      <button type="submit">Sign In</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-shell" id="dashboardShell">
+  <aside class="admin-sidebar">
+    <div class="brand"><img src="../assets/logo.jpg" alt="Boatek Labs">Boatek Admin</div>
+
+    <div class="admin-nav-item active" onclick="showAdminPanel('overview', this)"><i class="fas fa-gauge"></i> Overview</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('analytics', this)"><i class="fas fa-chart-line"></i> Analytics</div>
+
+    <div class="admin-nav-item" onclick="showAdminPanel('project-inquiries', this)"><i class="fas fa-briefcase"></i> Project Inquiries</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('career-applications', this)"><i class="fas fa-id-badge"></i> Career Applications</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('collaboration-requests', this)"><i class="fas fa-handshake"></i> Collaboration Requests</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('general-inquiries', this)"><i class="fas fa-comment"></i> General Inquiries</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('subscribers', this)"><i class="fas fa-envelope"></i> Newsletter Subscribers</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('messages', this)"><i class="fas fa-comments"></i> Signal Capsule Messages</div>
+
+    <div class="admin-nav-item" onclick="showAdminPanel('projects', this)"><i class="fas fa-diagram-project"></i> Projects</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('journal', this)"><i class="fas fa-newspaper"></i> Journal</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('newsletter', this)"><i class="fas fa-paper-plane"></i> Newsletter</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('config', this)"><i class="fas fa-sliders"></i> Site Config</div>
+    <div class="admin-nav-item" onclick="showAdminPanel('team', this)"><i class="fas fa-users"></i> Team</div>
+    <div class="admin-nav-item owner-only" onclick="showAdminPanel('admins', this)"><i class="fas fa-user-shield"></i> Team Accounts</div>
+
+    <div class="admin-sidebar-footer">
+      <div class="theme-toggle-row">
+        Theme
+        <button class="theme-toggle-btn" id="adminThemeToggle" onclick="toggleAdminTheme()"><i class="fas fa-moon"></i> Dark</button>
+      </div>
+      <button class="logout-btn" onclick="handleAdminLogout()"><i class="fas fa-arrow-right-from-bracket"></i> Log Out</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+
+    <div class="role-banner" id="viewerBanner"><i class="fas fa-user-pen"></i> <span id="viewerBannerText">You're signed in as an editor.</span></div>
+
+    <div class="admin-panel active" id="panel-overview">
+      <h2>Overview</h2>
+      <p class="panel-sub">Live environment detection for this server instance. Signed in as <span id="whoAmI" class="mono"></span>.</p>
+      <div class="stat-grid" id="overviewStats"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-analytics">
+      <h2>Analytics</h2>
+      <p class="panel-sub">Submission volume and privacy-respecting pageview stats — no cookies, no third-party trackers.</p>
+      <div id="analyticsContent"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-project-inquiries">
+      <h2>Project Inquiries</h2>
+      <p class="panel-sub">Submissions from the "Start a Project" form.</p>
+      <button class="export-btn" onclick="exportCsv('project-inquiries')"><i class="fas fa-download"></i> Export CSV</button>
+      <div id="table-project-inquiries"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-career-applications">
+      <h2>Career Applications</h2>
+      <p class="panel-sub">Submissions from the "Join the Team" form.</p>
+      <button class="export-btn" onclick="exportCsv('career-applications')"><i class="fas fa-download"></i> Export CSV</button>
+      <div id="table-career-applications"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-collaboration-requests">
+      <h2>Collaboration Requests</h2>
+      <p class="panel-sub">Submissions from the "Partner With Us" form.</p>
+      <button class="export-btn" onclick="exportCsv('collaboration-requests')"><i class="fas fa-download"></i> Export CSV</button>
+      <div id="table-collaboration-requests"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-general-inquiries">
+      <h2>General Inquiries</h2>
+      <p class="panel-sub">Submissions from the general contact form.</p>
+      <button class="export-btn" onclick="exportCsv('general-inquiries')"><i class="fas fa-download"></i> Export CSV</button>
+      <div id="table-general-inquiries"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-subscribers">
+      <h2>Newsletter Subscribers</h2>
+      <p class="panel-sub">Everyone who signed up via the footer newsletter form.</p>
+      <button class="export-btn" onclick="exportCsv('subscribers')"><i class="fas fa-download"></i> Export CSV</button>
+      <div id="table-subscribers"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-messages">
+      <h2>Signal Capsule Messages</h2>
+      <p class="panel-sub">Messages sent through the "Message Us" chat drawer.</p>
+      <button class="export-btn" onclick="exportCsv('messages')"><i class="fas fa-download"></i> Export CSV</button>
+      <div id="table-messages"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-projects">
+      <h2>Projects</h2>
+      <p class="panel-sub">Editing this updates Work, Games, Software pages, the homepage, and search — automatically.</p>
+      <button class="add-cms-btn needs-perm" data-perm="projects" onclick="addProjectRow()"><i class="fas fa-plus"></i> Add New Project</button>
+      <div id="projectsList"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-journal">
+      <h2>Journal</h2>
+      <p class="panel-sub">Editing this updates the Journal page, homepage preview, and search — automatically.</p>
+      <button class="add-cms-btn needs-perm" data-perm="journal" onclick="addJournalRow()"><i class="fas fa-plus"></i> Add New Post</button>
+      <div id="journalList"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-newsletter">
+      <h2>Newsletter</h2>
+      <p class="panel-sub">Draft polished studio updates with AI, preview your copy, and send to a subscriber segment.</p>
+      <div class="subscriber-count" id="subscriberCount">Loading subscriber count...</div>
+      <div class="newsletter-compose">
+        <div class="newsletter-ai-card">
+          <h3><i class="fas fa-wand-magic-sparkles"></i> AI Newsletter Studio</h3>
+          <p>Drop your rough notes, ideas, release details, or announcement. AI will turn them into a longer, structured newsletter draft.</p>
+          <div class="field"><label>Rough notes / announcement</label><textarea id="newsletterNotes" rows="5" placeholder="What happened? What should readers know? What is the context or next step?"></textarea></div>
+          <div class="field"><label>Writing tone</label><input id="newsletterTone" value="confident, thoughtful, creative, and human"></div>
+          <button class="save-btn needs-perm" data-perm="newsletter" onclick="generateNewsletterDraft()" id="newsletterAiBtn"><i class="fas fa-sparkles"></i> Generate newsletter draft</button>
+          <div id="newsletterAiMsg" class="newsletter-ai-msg"></div>
+        </div>
+        <div class="field"><label>Subject</label><input id="newsletterSubject" placeholder="Newsletter subject"></div>
+        <div class="field"><label>Email body</label><textarea id="newsletterBody" rows="12" placeholder="Your polished newsletter will appear here. You can edit it before sending."></textarea></div>
+        <div class="field"><label>Recipients</label><select id="newsletterAudience"><option value="all">All subscribers</option><option value="recent">Recent subscribers (last 30 days)</option><option value="custom">Specific email addresses</option></select><textarea id="newsletterCustomRecipients" rows="3" placeholder="Paste specific email addresses, separated by commas" style="display:none;margin-top:8px;"></textarea></div>
+        <button class="save-btn needs-perm" data-perm="newsletter" onclick="sendNewsletter()" id="newsletterSendBtn"><i class="fas fa-paper-plane"></i> Send newsletter</button>
+        <div class="save-msg" id="newsletterSendMsg"><i class="fas fa-check"></i> Sent.</div>
+      </div>
+      <h4 style="font-size:14px; margin-bottom:14px;">Past Campaigns</h4>
+      <div id="campaignHistory"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-config">
+      <h2>Site Config</h2>
+      <p class="panel-sub">Changes here update the live site immediately — no redeploy needed.</p>
+      <form class="settings-form" onsubmit="return saveConfig(event)">
+        <div class="field"><label>Status Ticker (topbar)</label><input id="cfg-statusMessage"></div>
+        <div class="field"><label>Contact Email</label><input id="cfg-contactEmail"></div>
+        <div class="field"><label>Support Email</label><input id="cfg-supportEmail"></div>
+        <div class="field"><label>Location</label><input id="cfg-location"></div>
+        <div class="field"><label>LinkedIn URL</label><input id="cfg-linkedin"></div>
+        <div class="field"><label>X (Twitter) URL</label><input id="cfg-x"></div>
+        <div class="field"><label>GitHub URL</label><input id="cfg-github"></div>
+        <button type="submit" class="save-btn needs-perm" data-perm="config">Save Changes</button>
+        <div class="save-msg" id="configSaveMsg"><i class="fas fa-check"></i> Saved.</div>
+      </form>
+    </div>
+
+    <div class="admin-panel" id="panel-team">
+      <h2>Team</h2>
+      <p class="panel-sub">Editing this updates the team shown on the homepage and Team page.</p>
+      <div id="teamEditorList"></div>
+      <button class="add-member-btn needs-perm" data-perm="team" onclick="addTeamMember()"><i class="fas fa-plus"></i> Add Team Member</button>
+      <div style="margin-top:20px;">
+        <button class="save-btn needs-perm" data-perm="team" style="background:var(--blue); color:#fff; border:none; padding:11px 24px; border-radius:6px; font-size:13.5px; font-weight:600; cursor:pointer;" onclick="saveTeam()">Save Team</button>
+        <div class="save-msg" id="teamSaveMsg"><i class="fas fa-check"></i> Saved.</div>
+      </div>
+    </div>
+
+    <div class="admin-panel owner-only" id="panel-admins">
+      <h2>Team Accounts</h2>
+      <p class="panel-sub">Super admins have full access, including managing other accounts. Editors can see everything but only edit the sections you assign them — the same way team members already have specific responsibilities assigned.</p>
+      <div id="adminsList"></div>
+      <div class="cms-card" style="max-width:520px;">
+        <h4 style="font-size:14px; margin-bottom:14px;">Add New Admin</h4>
+        <div class="cms-row">
+          <div><label>Name</label><input id="newAdminName"></div>
+          <div><label>Email</label><input id="newAdminEmail" type="email"></div>
+        </div>
+        <div class="cms-row">
+          <div><label>Password</label><input id="newAdminPassword" type="password"></div>
+          <div><label>Account Type</label>
+            <select id="newAdminRole" onchange="toggleEditorPermissionFields(this.value)">
+              <option value="editor">Editor (scoped access)</option>
+              <option value="super">Super Admin (full access)</option>
+            </select>
+          </div>
+        </div>
+        <div id="editorPermissionFields">
+          <label style="margin-bottom:8px;">Editing access — check every section this person should be able to edit</label>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:14px;">
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text);"><input type="checkbox" value="projects" class="perm-checkbox" style="width:auto;"> Projects</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text);"><input type="checkbox" value="journal" class="perm-checkbox" style="width:auto;"> Journal</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text);"><input type="checkbox" value="team" class="perm-checkbox" style="width:auto;"> Team</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text);"><input type="checkbox" value="config" class="perm-checkbox" style="width:auto;"> Site Config</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text);"><input type="checkbox" value="submissions" class="perm-checkbox" style="width:auto;"> Submissions</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text);"><input type="checkbox" value="newsletter" class="perm-checkbox" style="width:auto;"> Newsletter</label>
+          </div>
+        </div>
+        <button class="cms-btn-save" onclick="createAdminAccount()">Add Admin</button>
+        <div id="adminCreateError" style="display:none; color:var(--red); font-size:12.5px; margin-top:10px;"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

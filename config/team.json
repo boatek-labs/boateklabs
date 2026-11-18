@@ -1,0 +1,42 @@
+[
+  {
+    "id": "foster-boateng",
+    "name": "Foster Boateng",
+    "role": "Founder \u00b7 Web Dev & Product Strategy",
+    "tags": ["Frontend", "Node.js", "Product Strategy"],
+    "featured": true,
+    "hiring": false
+  },
+  {
+    "id": "abaye-jeremiah",
+    "name": "Abaye Jeremiah",
+    "role": "Python Engineer \u00b7 Backend & Infrastructure",
+    "tags": ["Python", "APIs", "Databases"],
+    "featured": true,
+    "hiring": false
+  },
+  {
+    "id": "gad-ackah",
+    "name": "Gad Ackah",
+    "role": "Game Developer \u00b7 3D Artist",
+    "tags": ["Unity", "3D Modeling", "Animation"],
+    "featured": true,
+    "hiring": false
+  },
+  {
+    "id": "creative-collaborator",
+    "name": "Creative Collaborator",
+    "role": "Product Ideas & Brainstorming",
+    "tags": ["Strategy"],
+    "featured": false,
+    "hiring": false
+  },
+  {
+    "id": "hiring-graphic-designer",
+    "name": "Graphic Designer",
+    "role": "We're Hiring",
+    "tags": [],
+    "featured": true,
+    "hiring": true
+  }
+]
