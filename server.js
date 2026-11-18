@@ -23,7 +23,6 @@ const rssRoute = require('./routes/rss');
 const sitemapRoute = require('./routes/sitemap');
 const paymentsRoute = require('./routes/payments');
 
-const { bootstrapDefaultAdmin } = require('./lib/admins');
 
 // Safety net: an uncaught error inside a route handler (a bug like a typo'd
 // method name) should show up loudly in the logs and, ideally, in the
@@ -124,13 +123,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong on our end.' });
 });
 
-bootstrapDefaultAdmin()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Boatek Labs server running on http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('[server] Failed to bootstrap admin account:', err);
-    process.exit(1);
-  });
+app.listen(PORT, () => {
+  console.log(`Boatek Labs server running on http://localhost:${PORT}`);
+});

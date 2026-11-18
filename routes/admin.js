@@ -99,6 +99,10 @@ function toCsv(rows) {
 
 // ============================================================ AUTH ============================================================
 
+router.get('/auth-config',(req,res)=>res.json({googleClientId:process.env.GOOGLE_CLIENT_ID||null}));
+router.post('/setup-owner',loginLimiter,async(req,res)=>{const {name,email,password,setupKey}=req.body||{};const a=Buffer.from(process.env.OWNER_SETUP_KEY||''),b=Buffer.from(String(setupKey||''));if(!a.length||a.length!==b.length||!require('crypto').timingSafeEqual(a,b))return res.status(403).json({error:'Invalid or disabled owner setup key.'});if(!name||!email||!password||String(password).length<10)return res.status(400).json({error:'Name, email and password (10+ characters) are required.'});if((await admins.listPublic()).length)return res.status(409).json({error:'An administrator already exists.'});try{const admin=await admins.createAdmin({name,email,password,role:'super'});const token=await createSession(admin);res.cookie(SESSION_COOKIE,token,{httpOnly:true,sameSite:'lax',secure:process.env.NODE_ENV==='production',maxAge:43200000});res.status(201).json({ok:true,admin:admins.toPublic(admin)});}catch(e){res.status(400).json({error:e.message});}});
+router.post('/google-login',loginLimiter,async(req,res)=>{try{if(!process.env.GOOGLE_CLIENT_ID)return res.status(503).json({error:'Google sign-in is not configured.'});const tokenId=req.body?.credential;if(!tokenId)return res.status(400).json({error:'Google credential required.'});const v=await fetch('https://oauth2.googleapis.com/tokeninfo?id_token='+encodeURIComponent(tokenId));if(!v.ok)return res.status(401).json({error:'Google credential invalid.'});const c=await v.json();if(c.aud!==process.env.GOOGLE_CLIENT_ID||c.email_verified!=='true')return res.status(401).json({error:'Google account verification failed.'});const admin=await admins.findByEmail(String(c.email||'').toLowerCase());if(!admin)return res.status(403).json({error:'This Google account has no administrator account.'});const sessionToken=await createSession(admin);res.cookie(SESSION_COOKIE,sessionToken,{httpOnly:true,sameSite:'lax',secure:process.env.NODE_ENV==='production',maxAge:43200000});res.json({ok:true,admin:admins.toPublic(admin)});}catch(e){console.error('[admin] Google login failed',e);res.status(500).json({error:'Google sign-in failed.'});}});
+
 router.post('/login', loginLimiter, async (req, res) => {
   const { email, password } = req.body || {};
   if (!email || !password) {
@@ -127,7 +131,7 @@ router.post('/logout', async (req, res) => {
 
 router.get('/session', async (req, res) => {
   const token = req.cookies ? req.cookies[SESSION_COOKIE] : null;
-  const session = getSession(token);
+  const session = await getSession(token);
   if (!session) return res.json({ authenticated: false });
   const admin = await admins.findById(session.adminId);
   if (!admin) return res.json({ authenticated: false });

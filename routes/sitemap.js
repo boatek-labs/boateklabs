@@ -9,7 +9,7 @@ const projectsStore = new JsonStore(path.join(__dirname, '..', 'content', 'proje
 const journalStore = new JsonStore(path.join(__dirname, '..', 'content', 'journal.json'));
 
 const STATIC_PAGES = [
-  { path: '/index.html', priority: '1.0' },
+  { path: '/', priority: '1.0' },
   { path: '/work.html', priority: '0.9' },
   { path: '/games.html', priority: '0.8' },
   { path: '/software.html', priority: '0.8' },
@@ -30,16 +30,17 @@ router.get('/', async (req, res) => {
     const staticUrls = STATIC_PAGES.map(
       (p) => `  <url><loc>${buildUrl(req, p.path)}</loc><priority>${p.priority}</priority></url>`
     );
-    const projectUrls = projects.map(
+    const projectUrls = projects.filter(p=>p&&p.id&&p.published!==false).map(
       (p) => `  <url><loc>${buildUrl(req, `/project.html?id=${encodeURIComponent(p.id)}`)}</loc><priority>0.6</priority></url>`
     );
-    const postUrls = posts.map(
+    const postUrls = posts.filter(p=>p&&p.slug&&p.published!==false).map(
       (p) => `  <url><loc>${buildUrl(req, `/journal-post.html?slug=${encodeURIComponent(p.slug)}`)}</loc><priority>0.5</priority></url>`
     );
 
+    const uniqueUrls=[...new Set([...staticUrls,...projectUrls,...postUrls])];
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...staticUrls, ...projectUrls, ...postUrls].join('\n')}
+${uniqueUrls.join('\n')}
 </urlset>`;
 
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="/admin/admin.css">
 </head>
 <body>
 
@@ -24,6 +24,7 @@
       <label for="adminPassword">Password</label>
       <input type="password" id="adminPassword" required autocomplete="current-password">
       <button type="submit">Sign In</button>
+<div class="auth-divider"><span>or</span></div><div id="googleSignInButton" class="google-signin"></div><p class="auth-help" id="googleAuthHelp">Google sign-in is available when configured.</p><details class="owner-setup" id="ownerSetup"><summary>First-time owner setup</summary><p>Only use this if no administrator account exists. Enter the one-time setup key provided by the site owner.</p><form onsubmit="return handleOwnerSetup(event)"><label for="setupName">Name</label><input id="setupName" required><label for="setupEmail">Email</label><input id="setupEmail" type="email" required><label for="setupPassword">Password</label><input id="setupPassword" type="password" minlength="10" required><label for="setupKey">One-time setup key</label><input id="setupKey" type="password" required><button type="submit">Create owner account</button></form></details>
     </form>
   </div>
 </div>
@@ -218,6 +219,6 @@
   </main>
 </div>
 
-<script src="admin.js"></script>
+<script src="/admin/admin.js"></script>
 </body>
 </html>
