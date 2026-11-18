@@ -203,3 +203,73 @@ body.role-owner .admin-nav-item.owner-only{ display:flex; }
 
 .auth-divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--muted);font-size:12px}.auth-divider:before,.auth-divider:after{content:'';height:1px;background:var(--border);flex:1}.google-signin{display:flex;justify-content:center;min-height:42px}.auth-help{font-size:11px;color:var(--muted);text-align:center;margin:8px 0 16px}.owner-setup{border-top:1px solid var(--border);padding-top:14px;margin-top:14px;font-size:12px;color:var(--muted)}.owner-setup summary{cursor:pointer;color:var(--blue);font-weight:600}.owner-setup p{margin:10px 0}.owner-setup form{margin-top:12px}.owner-setup input{margin-bottom:10px}
 @media(max-width:760px){.admin-shell.visible{display:block}.admin-sidebar{width:100%;padding:14px;max-height:none}.admin-sidebar-footer{margin-top:12px}.admin-main{padding:22px 16px;max-height:none}.admin-nav-item{display:inline-flex;margin:2px}.login-card{padding:30px 22px}}
+
+
+/* ============================================================
+   GEOMETRIC ADMIN GATE — Boatek Labs
+   Editorial split layout, precise gridwork and geometric forms.
+   ============================================================ */
+.login-screen{min-height:100svh;padding:0;background:#0a0d14;overflow:hidden;position:relative}
+.login-layout{width:min(1240px,100%);min-height:min(780px,100svh);display:grid;grid-template-columns:1.02fr .98fr;background:#f7f7f4;box-shadow:0 35px 100px rgba(0,0,0,.38);position:relative;z-index:1}
+.login-art{position:relative;overflow:hidden;min-height:720px;padding:34px 42px;background:#111722;color:#f5f4ef;display:flex;flex-direction:column;justify-content:space-between;isolation:isolate}
+.login-art:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(39,82,117,.22),transparent 48%,rgba(197,150,94,.10));z-index:-2}
+.art-grid{position:absolute;inset:0;z-index:-1;opacity:.26;background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(135deg,#000,transparent 88%)}
+.art-topline{display:flex;align-items:center;gap:14px;font:600 10px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#d5d8d8}
+.art-topline>span:last-child i{font-style:normal;color:#d5a76d;padding:0 5px}
+.art-mark{width:36px;height:36px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.35);font:700 17px 'Space Grotesk',sans-serif;letter-spacing:-.12em;color:#fff}
+.art-mark span{color:#d5a76d}
+.art-copy{position:relative;z-index:2;max-width:470px;margin:80px 0 90px}
+.eyebrow,.login-kicker{font:500 10px 'JetBrains Mono',monospace;letter-spacing:.16em}
+.eyebrow{color:#d5a76d}
+.art-copy h2{font-size:clamp(54px,6.4vw,86px);line-height:.98;letter-spacing:-.075em;margin:22px 0 24px;font-weight:600}
+.art-copy h2 em{font-style:normal;color:#d5a76d}
+.art-copy p{max-width:340px;color:#aeb8c3;font-size:14px;line-height:1.8}
+.art-bottom{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:#85909c;font:9px 'JetBrains Mono',monospace;letter-spacing:.11em}
+.art-coordinate{color:#d5a76d}
+.art-orbit{position:absolute;border:1px solid rgba(213,167,109,.23);border-radius:50%;pointer-events:none}
+.orbit-one{width:490px;height:490px;right:-180px;top:12%;transform:rotate(-24deg)}
+.orbit-two{width:350px;height:350px;right:-110px;top:22%;border-color:rgba(255,255,255,.16)}
+.art-shape{position:absolute;pointer-events:none}
+.shape-triangle{width:0;height:0;border-left:100px solid transparent;border-right:100px solid transparent;border-bottom:174px solid rgba(213,167,109,.08);right:12%;top:24%;transform:rotate(18deg)}
+.shape-diamond{width:118px;height:118px;border:1px solid rgba(255,255,255,.2);right:24%;bottom:13%;transform:rotate(45deg)}
+.login-panel{display:flex;align-items:center;justify-content:center;padding:60px clamp(30px,6vw,86px);background:#f7f7f4;color:#151a22}
+.login-panel-inner{width:100%;max-width:390px}
+.login-mobile-brand{display:none;align-items:center;gap:12px;font:600 10px 'JetBrains Mono',monospace;letter-spacing:.16em;margin-bottom:50px}
+.login-kicker{display:flex;align-items:center;gap:9px;color:#77808b;font-size:9px;margin-bottom:26px}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#b98a54;box-shadow:0 0 0 4px rgba(185,138,84,.13)}
+.login-panel h1{font-size:clamp(42px,4.5vw,58px);line-height:1.02;letter-spacing:-.065em;font-weight:600;margin-bottom:12px;color:#171d27}
+.heading-period{color:#b98a54}
+.login-panel p.sub{font-size:13px;color:#737c87;margin-bottom:32px}
+.login-panel label{display:block;font-size:11px;font-weight:600;color:#505a65;margin:0 0 8px;letter-spacing:.02em}
+.input-wrap{height:50px;display:flex;align-items:center;gap:12px;padding:0 14px;border:1px solid #dfe2e4;background:#fff;margin-bottom:20px;transition:border-color .2s,box-shadow .2s}
+.input-wrap:focus-within{border-color:#a77c4e;box-shadow:0 0 0 3px rgba(167,124,78,.11)}
+.input-wrap i{font-size:13px;color:#8c949c}
+.input-wrap input{width:100%;height:100%;border:0!important;outline:0!important;background:transparent!important;color:#171d27!important;font-size:13px!important;margin:0!important;padding:0!important;box-shadow:none!important}
+.input-wrap input::placeholder{color:#a4abb2}
+.login-submit{width:100%;height:51px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#172230!important;color:#fff;border:1px solid #172230!important;border-radius:0!important;font-size:12px!important;font-weight:600!important;letter-spacing:.02em;transition:background .2s,transform .2s}
+.login-submit i{color:#d5a76d;transition:transform .2s}
+.login-submit:hover{background:#26394b!important;transform:translateY(-1px)}
+.login-submit:hover i{transform:translateX(4px)}
+.login-error{background:#fff0ee;border:1px solid #e8b9b1;color:#a43d32;padding:11px 13px;font-size:12px;margin-bottom:18px}
+.auth-divider{display:flex;align-items:center;gap:13px;margin:25px 0 17px;color:#929aa2;font:9px 'JetBrains Mono',monospace;letter-spacing:.12em}
+.auth-divider:before,.auth-divider:after{content:"";height:1px;background:#e1e3e3;flex:1}
+.google-signin{min-height:42px;justify-content:center}
+.google-signin>div{width:100%!important;display:flex;justify-content:center}
+.auth-help{font-size:10px!important;color:#939ba3!important;text-align:center;margin:9px 0 20px!important}
+.owner-setup{border-top:1px solid #e2e4e3;padding-top:16px;margin-top:18px;color:#7b838b;font-size:11px}
+.owner-setup summary{list-style:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;color:#5b6570;font-size:11px;font-weight:600}
+.owner-setup summary::-webkit-details-marker{display:none}
+.owner-setup summary i:first-child{color:#a77c4e;margin-right:8px}
+.owner-setup summary i:last-child{font-size:9px;transition:transform .2s}
+.owner-setup[open] summary i:last-child{transform:rotate(180deg)}
+.owner-setup p{line-height:1.65;margin:12px 0}
+.owner-setup form{margin-top:12px}
+.owner-setup input{width:100%;padding:10px 12px;border:1px solid #dfe2e4;border-radius:0;background:#fff;color:#171d27;font-size:12px;margin:0 0 12px}
+.owner-setup input:focus{outline:1px solid #a77c4e;border-color:#a77c4e}
+.owner-submit{height:42px;background:#e9e7e1!important;color:#303943!important;border:1px solid #d9d7d0!important;border-radius:0!important;font-size:11px!important}
+.owner-submit i{margin-left:8px;color:#a77c4e}
+.login-footnote{display:flex;align-items:center;gap:9px;border-top:1px solid #e2e4e3;margin-top:30px;padding-top:18px;color:#929aa2;font-size:10px}
+.login-footnote i{color:#a77c4e}
+@media(max-width:900px){.login-layout{grid-template-columns:.85fr 1.15fr}.login-art{padding:28px;min-height:680px}.login-panel{padding:48px 34px}.art-copy h2{font-size:58px}}
+@media(max-width:640px){.login-screen{display:block;padding:0;background:#f7f7f4;overflow:auto}.login-layout{display:block;min-height:100svh;width:100%;box-shadow:none}.login-art{display:none}.login-panel{min-height:100svh;padding:32px 25px 28px;align-items:flex-start}.login-panel-inner{max-width:420px;margin:auto}.login-mobile-brand{display:flex;margin-bottom:54px}.login-panel h1{font-size:48px}.login-panel p.sub{margin-bottom:28px}}
+@media(prefers-reduced-motion:reduce){.login-submit,.login-submit i,.owner-setup summary i:last-child{transition:none}}
