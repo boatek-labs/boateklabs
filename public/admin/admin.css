@@ -447,3 +447,43 @@ body.role-owner .admin-nav-item.owner-only{ display:flex; }
  .brand-message h2{font-size:34px}
  .brand-footer{letter-spacing:.07em}
 }
+
+
+/* Compact circular logo paired with the brand name. */
+.brand-stage{
+  display:flex;flex-direction:row;align-items:center;gap:16px;
+  width:max-content;max-width:100%;
+}
+.brand-logo{
+  flex:0 0 auto;width:66px;height:66px;max-height:none;
+  object-fit:cover;object-position:center;border-radius:50%;
+  padding:4px;background:#fff;
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 6px 22px rgba(0,0,0,.24);
+  filter:none;
+}
+.brand-identity{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.brand-name{
+  color:#f5f7fa;font:700 15px 'Space Grotesk',sans-serif;
+  letter-spacing:.11em;line-height:1.1;
+}
+.brand-caption{
+  color:#9eacc0;font:500 8px 'JetBrains Mono',monospace;
+  letter-spacing:.18em;padding:0;
+}
+@media(max-width:900px) and (min-width:641px){
+ .brand-logo{width:58px;height:58px}
+ .brand-name{font-size:14px}
+ .brand-stage{gap:13px}
+}
+@media(max-width:640px){
+ .brand-stage{gap:12px}
+ .brand-logo{width:52px;height:52px;padding:3px}
+ .brand-name{font-size:13px}
+ .brand-caption{font-size:7px;letter-spacing:.14em}
+}
+@media(max-width:360px){
+ .brand-logo{width:48px;height:48px}
+ .brand-name{font-size:12px}
+ .brand-stage{gap:10px}
+}
