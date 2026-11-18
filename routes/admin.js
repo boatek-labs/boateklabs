@@ -1,6 +1,5 @@
 // routes/admin.js
 const express = require('express');
-const fs = require('fs/promises');
 const path = require('path');
 const os = require('os');
 const rateLimit = require('express-rate-limit');
@@ -14,8 +13,6 @@ const { renderEmail } = require('../lib/emailTemplates');
 
 const router = express.Router();
 
-const CONFIG_PATH = path.join(__dirname, '..', 'config', 'site.json');
-const TEAM_PATH = path.join(__dirname, '..', 'config', 'team.json');
 const SESSION_COOKIE = 'boatek_admin_session';
 
 const SUBMISSION_STORES = {
@@ -28,6 +25,8 @@ const SUBMISSION_STORES = {
 };
 
 const projectsStore = new JsonStore(path.join(__dirname, '..', 'content', 'projects.json'));
+const configStore = new JsonStore(path.join(__dirname, '..', 'config', 'site.json'));
+const teamStore = new JsonStore(path.join(__dirname, '..', 'config', 'team.json'));
 const journalStore = new JsonStore(path.join(__dirname, '..', 'content', 'journal.json'));
 const pageviewsStore = new JsonStore(path.join(__dirname, '..', 'data', 'pageviews.json'));
 const newsletterCampaignsStore = new JsonStore(path.join(__dirname, '..', 'data', 'newsletter-campaigns.json'));
@@ -40,16 +39,8 @@ const loginLimiter = rateLimit({
   message: { error: 'Too many login attempts — please wait before trying again.' }
 });
 
-const UPLOAD_DIR = path.join(__dirname, '..', 'public', 'uploads');
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => cb(null, UPLOAD_DIR),
-    filename: (req, file, cb) => {
-      const ext = path.extname(file.originalname).toLowerCase();
-      const safeName = 'upload-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8) + ext;
-      cb(null, safeName);
-    }
-  }),
+  storage: multer.memoryStorage(),
   limits: { fileSize: 3 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
@@ -60,9 +51,9 @@ const upload = multer({
   }
 });
 
-function requireAdmin(req, res, next) {
+async function requireAdmin(req, res, next) {
   const token = req.cookies ? req.cookies[SESSION_COOKIE] : null;
-  const session = getSession(token);
+  const session = await getSession(token);
   if (!session) return res.status(401).json({ error: 'Not authenticated.' });
   req.adminSession = session;
   next();
@@ -127,7 +118,7 @@ router.post('/login', loginLimiter, async (req, res) => {
   res.json({ ok: true, admin: admins.toPublic(admin) });
 });
 
-router.post('/logout', (req, res) => {
+router.post('/logout', async (req, res) => {
   const token = req.cookies ? req.cookies[SESSION_COOKIE] : null;
   destroySession(token);
   res.clearCookie(SESSION_COOKIE);
@@ -298,63 +289,13 @@ router.get('/analytics', async (req, res) => {
 
 // ============================================================ SITE CONFIG ============================================================
 
-router.get('/config', async (req, res) => {
-  try {
-    const raw = await fs.readFile(CONFIG_PATH, 'utf-8');
-    res.json(JSON.parse(raw));
-  } catch (err) {
-    res.status(500).json({ error: 'Could not read site config.' });
-  }
-});
-
-router.put('/config', requirePermission('config'), async (req, res) => {
-  const incoming = req.body || {};
-  const allowedKeys = ['social', 'contactEmail', 'supportEmail', 'statusMessage', 'location'];
-  const sanitized = {};
-  for (const key of allowedKeys) {
-    if (incoming[key] !== undefined) sanitized[key] = incoming[key];
-  }
-  try {
-    const raw = await fs.readFile(CONFIG_PATH, 'utf-8');
-    const current = JSON.parse(raw);
-    const next = { ...current, ...sanitized };
-    await fs.writeFile(CONFIG_PATH, JSON.stringify(next, null, 2), 'utf-8');
-    res.json({ ok: true, config: next });
-  } catch (err) {
-    console.error('[admin] failed to write site config:', err);
-    res.status(500).json({ error: 'Could not save site config.' });
-  }
-});
+router.get('/config', async (req,res)=>{try{res.json(await configStore.readValue());}catch(e){console.error('[admin] config read failed',e);res.status(500).json({error:'Could not read site config.'});}});
+router.put('/config',requirePermission('config'),async(req,res)=>{try{const current=await configStore.readValue();const allowed=['social','contactEmail','supportEmail','statusMessage','location'];const next={...current};for(const k of allowed)if(req.body?.[k]!==undefined)next[k]=req.body[k];await configStore.replace(next);res.json({ok:true,config:next});}catch(e){console.error('[admin] config save failed',e);res.status(500).json({error:'Could not save site config.'});}});
 
 // ============================================================ TEAM ============================================================
 
-router.get('/team', async (req, res) => {
-  try {
-    const raw = await fs.readFile(TEAM_PATH, 'utf-8');
-    res.json(JSON.parse(raw));
-  } catch (err) {
-    res.status(500).json({ error: 'Could not read team data.' });
-  }
-});
-
-router.put('/team', requirePermission('team'), async (req, res) => {
-  const incoming = req.body;
-  if (!Array.isArray(incoming)) {
-    return res.status(400).json({ error: 'Team data must be an array of team members.' });
-  }
-  for (const member of incoming) {
-    if (!member.id || !member.name || !member.role) {
-      return res.status(400).json({ error: 'Each team member needs at least an id, name, and role.' });
-    }
-  }
-  try {
-    await fs.writeFile(TEAM_PATH, JSON.stringify(incoming, null, 2), 'utf-8');
-    res.json({ ok: true, team: incoming });
-  } catch (err) {
-    console.error('[admin] failed to write team data:', err);
-    res.status(500).json({ error: 'Could not save team data.' });
-  }
-});
+router.get('/team',async(req,res)=>{try{res.json(await teamStore.readAll());}catch(e){res.status(500).json({error:'Could not read team data.'});}});
+router.put('/team',requirePermission('team'),async(req,res)=>{const incoming=req.body;if(!Array.isArray(incoming)||incoming.some(m=>!m.id||!m.name||!m.role))return res.status(400).json({error:'Team data must be an array; each member needs an id, name, and role.'});try{await teamStore.replace(incoming);res.json({ok:true,team:incoming});}catch(e){console.error('[admin] team save failed',e);res.status(500).json({error:'Could not save team data.'});}});
 
 // ============================================================ PROJECTS CMS ============================================================
 
@@ -436,13 +377,8 @@ router.delete('/journal/:id', requirePermission('journal'), async (req, res) => 
 
 // ============================================================ FILE UPLOAD ============================================================
 
-router.post('/upload', requirePermission('projects'), (req, res) => {
-  upload.single('file')(req, res, (err) => {
-    if (err) return res.status(400).json({ error: err.message });
-    if (!req.file) return res.status(400).json({ error: 'No file uploaded.' });
-    res.json({ ok: true, url: '/uploads/' + req.file.filename });
-  });
-});
+router.post('/upload',requirePermission('projects'),(req,res)=>{upload.single('file')(req,res,async err=>{if(err)return res.status(400).json({error:err.message});if(!req.file)return res.status(400).json({error:'No file uploaded.'});try{const id='img-'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);const db=require('../lib/db');await db.query('INSERT INTO app_uploads(id,content_type,file_data) VALUES($1,$2,$3)',[id,req.file.mimetype,req.file.buffer]);res.json({ok:true,url:'/api/admin/uploads/'+id});}catch(e){console.error('[admin] upload persistence failed',e);res.status(500).json({error:'Could not save uploaded image.'});}});});
+router.get('/uploads/:id',async(req,res)=>{try{const db=require('../lib/db');const result=await db.query('SELECT content_type,file_data FROM app_uploads WHERE id=$1',[req.params.id]);if(!result.rows.length)return res.status(404).end();res.setHeader('Content-Type',result.rows[0].content_type);res.setHeader('Cache-Control','public, max-age=31536000, immutable');res.send(result.rows[0].file_data);}catch(e){console.error('[admin] upload read failed',e);res.status(500).end();}});
 
 // ============================================================ SUBMISSIONS ============================================================
 
