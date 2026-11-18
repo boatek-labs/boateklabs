@@ -2,20 +2,31 @@
 const express = require('express');
 const path = require('path');
 const JsonStore = require('../lib/jsonStore');
+const fs = require('fs/promises');
 const crypto = require('crypto');
 const { sendMail } = require('../lib/mailer');
 const { buildUrl } = require('../lib/siteUrl');
 
 const router = express.Router();
 const store = new JsonStore(path.join(__dirname, '..', 'data', 'subscribers.json'));
-const pendingStore = new JsonStore(path.join(__dirname, '..', 'data', 'newsletter-verifications.json'));
+const PENDING_PATH = path.join(__dirname, '..', 'data', 'newsletter-verifications.json');
 const OTP_TTL_MS = 15 * 60 * 1000;
+let pendingQueue = Promise.resolve();
 function hashOtp(email, otp) {
   return crypto.createHmac('sha256', process.env.OTP_SECRET || process.env.ADMIN_PASSWORD || 'boatek-newsletter-otp-change-this')
     .update(`${email}:${otp}`).digest('hex');
 }
-async function readPending() { return pendingStore.readAll(); }
-async function writePending(list) { return pendingStore.replace(list); }
+async function readPending() {
+  try { return JSON.parse(await fs.readFile(PENDING_PATH, 'utf-8')); } catch { return []; }
+}
+async function writePending(list) {
+  const task = pendingQueue.then(async () => {
+    await fs.mkdir(path.dirname(PENDING_PATH), { recursive: true });
+    await fs.writeFile(PENDING_PATH, JSON.stringify(list, null, 2), { encoding: 'utf-8', mode: 0o600 });
+  });
+  pendingQueue = task.catch(() => {});
+  return task;
+}
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

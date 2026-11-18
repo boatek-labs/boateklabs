@@ -108,7 +108,7 @@ router.post('/login', loginLimiter, async (req, res) => {
   if (!admin || !admins.verifyPassword(password, admin.passwordHash)) {
     return res.status(401).json({ error: 'Incorrect email or password.' });
   }
-  const token = createSession(admin);
+  const token = await createSession(admin);
   res.cookie(SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: 'lax',
@@ -120,7 +120,7 @@ router.post('/login', loginLimiter, async (req, res) => {
 
 router.post('/logout', async (req, res) => {
   const token = req.cookies ? req.cookies[SESSION_COOKIE] : null;
-  destroySession(token);
+  await destroySession(token);
   res.clearCookie(SESSION_COOKIE);
   res.json({ ok: true });
 });
@@ -180,7 +180,7 @@ router.delete('/admins/:id', requireSuper, async (req, res) => {
   }
   const result = await admins.deleteAdmin(req.params.id);
   if (!result.ok) return res.status(400).json({ error: result.error });
-  destroySessionsForAdmin(req.params.id);
+  await destroySessionsForAdmin(req.params.id);
   res.json({ ok: true });
 });
 
