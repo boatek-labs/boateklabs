@@ -788,3 +788,31 @@ header nav.primary{padding-right:68px}
  header nav.primary{padding-right:14px}
  .nav-account-control{align-self:flex-start}
 }
+
+
+/* Final header refinements: theme control outside the nav, balanced mobile menu,
+   and a quiet account-initials treatment. */
+header nav.primary{right:calc(3% + 54px);padding-right:14px}
+#themeToggle.theme-toggle{right:3%;top:41px;margin-left:0;transition:background .28s ease,border-color .28s ease,color .28s ease,transform .28s ease,box-shadow .28s ease}
+#themeToggle.theme-toggle i{transition:transform .35s ease,opacity .2s ease}
+#themeToggle.theme-toggle.theme-switched i{transform:rotate(180deg) scale(1.08)}
+.nav-account-photo,.nav-account-initials{background:transparent!important;border:1px solid rgba(180,195,215,.2)!important;box-shadow:none!important;color:#d4dce8!important}
+header nav.primary .nav-item.account-nav-item>a{background:transparent!important;color:#d4dce8!important;padding:9px 12px!important;margin-left:3px!important;box-shadow:none!important}
+header nav.primary .nav-item.account-nav-item>a:hover{background:rgba(148,163,184,.09)!important;color:#fff!important}
+@media(max-width:900px){
+ header nav.primary{right:15px;left:15px;padding:10px}
+ #themeToggle.theme-toggle{top:21px;right:69px;width:38px;height:38px;min-width:38px}
+ header .header-inner .mobile-nav-toggle{
+   width:40px;height:40px;flex:0 0 40px;padding:0;display:grid;place-items:center;
+   margin-left:auto;border:1px solid rgba(180,195,215,.22);
+   border-radius:12px;background:rgba(15,25,42,.68);color:#e7edf6;
+   box-shadow:none;transition:background .22s ease,border-color .22s ease,transform .22s ease
+ }
+ header .header-inner .mobile-nav-toggle:hover,
+ header .header-inner .mobile-nav-toggle:focus-visible{background:rgba(148,163,184,.12);border-color:rgba(180,195,215,.42);transform:translateY(-1px)}
+ header .header-inner .mobile-nav-toggle i{transition:transform .25s ease}
+ header .header-inner .mobile-nav-toggle[aria-expanded="true"] i{transform:rotate(90deg)}
+}
+@media(min-width:901px){
+ #themeToggle.theme-toggle{right:1.4%;top:41px}
+}
