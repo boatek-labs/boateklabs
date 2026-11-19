@@ -1,27 +1,82 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Account — Boatek Labs</title><meta name="description" content="Create your Boatek Labs account, save projects and track your studio requests.">
-<meta name="theme-color" content="#070B14"><link rel="icon" href="/assets/favicon-32.png">
+<meta name="theme-color" content="#070B14"><meta name="robots" content="noindex,nofollow"><link rel="icon" href="/assets/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="/css/style.css">
 <style>
-.account-page{min-height:75vh;padding:64px 0 100px;background:radial-gradient(ellipse at 50% 0,rgba(59,130,246,.12),transparent 50%)}
-.account-shell{max-width:1040px;margin:auto;padding:0 24px}
-.account-heading{text-align:center;margin-bottom:38px}.account-heading .eyebrow{justify-content:center}.account-heading h1{font-size:clamp(32px,5vw,48px);margin-bottom:10px}.account-heading p{color:var(--muted)}
-.account-panel{max-width:490px;margin:auto;background:var(--card-bg);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,4vw,36px);box-shadow:0 24px 80px rgba(0,0,0,.22)}
-.account-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--navy);border:1px solid var(--line);padding:5px;border-radius:11px;margin-bottom:24px}
-.account-tabs button{border:0;background:transparent;color:var(--muted);padding:11px;border-radius:8px;font-weight:600;cursor:pointer}.account-tabs button.active{background:var(--darkblue);color:var(--text)}
-.account-form{display:grid;gap:14px}.account-form label{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}.account-form input{width:100%;padding:13px 14px;border-radius:9px;border:1px solid var(--line);background:var(--navy);color:var(--text);font:inherit;outline:none}.account-form input:focus{border-color:var(--cyan)}
-.account-action{width:100%;justify-content:center;border-radius:9px;padding:13px}.account-divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:11px;margin:20px 0}.account-divider:before,.account-divider:after{content:"";height:1px;background:var(--line);flex:1}
-#googleButton{display:flex;justify-content:center;min-height:44px}.account-message{font-size:13px;margin-top:14px;color:var(--cyan);min-height:20px}.account-message.error{color:#fb923c}
-.account-dashboard{display:none}.dashboard-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap}.dashboard-top h2{font-size:25px}.dashboard-top p{color:var(--muted);font-size:13px}.dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.dash-card{background:var(--card-bg);border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0}.dash-card h3{font-size:17px;margin-bottom:14px}.dash-list{display:grid;gap:10px}.dash-item{padding:13px;border:1px solid var(--line);border-radius:9px}.dash-item strong{display:block;font-size:13px}.dash-item small{color:var(--muted)}.dash-item button{margin-top:9px}.empty-state{color:var(--muted);font-size:13px;padding:14px 0}.save-project{border:1px solid var(--line);background:transparent;color:var(--cyan);padding:7px 10px;border-radius:7px;cursor:pointer;font-size:12px}.profile-row{display:flex;gap:8px}.profile-row input{min-width:0;flex:1;background:var(--navy);border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--text)}
-@media(max-width:700px){.account-page{padding:44px 0 70px}.dashboard-grid{grid-template-columns:1fr}.account-shell{padding:0 16px}.account-panel{padding:22px}.dashboard-top{align-items:flex-start}}
+:root{color-scheme:dark}
+.account-page{position:relative;isolation:isolate;min-height:calc(100vh - 150px);padding:clamp(52px,8vw,100px) 0 90px;overflow:hidden;background:radial-gradient(ellipse at 18% 18%,rgba(59,130,246,.17),transparent 34%),radial-gradient(ellipse at 88% 76%,rgba(139,92,246,.13),transparent 34%),#070B14}
+.account-page:before,.account-page:after{content:"";position:absolute;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(2px)}
+.account-page:before{width:360px;height:360px;top:-230px;right:8%;border:1px solid rgba(96,165,250,.14);box-shadow:0 0 90px rgba(59,130,246,.08)}
+.account-page:after{width:250px;height:250px;bottom:-180px;left:6%;border:1px solid rgba(34,211,238,.12)}
+.account-shell{max-width:1120px;margin:auto;padding:0 28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,470px);align-items:center;gap:clamp(42px,8vw,112px)}
+.account-heading{text-align:left;margin:0;max-width:490px}
+.account-brand{display:flex;align-items:center;gap:13px;margin-bottom:42px}
+.account-brand img{width:52px;height:52px;object-fit:cover;border-radius:15px;border:1px solid rgba(255,255,255,.17);box-shadow:0 8px 28px rgba(0,0,0,.28)}
+.account-brand span{display:block;font:700 13px 'Space Grotesk',sans-serif;letter-spacing:.13em;color:#f5f7fa}
+.account-brand small{display:block;margin-top:5px;font:500 9px 'JetBrains Mono',monospace;letter-spacing:.13em;color:#8b94a7}
+.account-heading .eyebrow{justify-content:flex-start;color:#7dd3fc;font-size:10px;letter-spacing:.17em}
+.account-heading h1{font:600 clamp(38px,5.3vw,64px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-.055em;margin:22px 0 18px;color:#f5f7fa}
+.account-heading h1 span{color:#60a5fa}
+.account-heading>p{color:#a4aec0;font-size:15px;line-height:1.8;max-width:420px}
+.account-benefits{display:grid;gap:15px;margin-top:34px;color:#c5ccda;font-size:13px}
+.account-benefits span{display:flex;align-items:center;gap:12px}
+.account-benefits i{width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(96,165,250,.22);border-radius:9px;color:#67e8f9;background:rgba(59,130,246,.09)}
+.account-panel{width:100%;max-width:none;margin:0;position:relative;background:linear-gradient(155deg,rgba(20,30,49,.97),rgba(10,16,29,.98));border:1px solid rgba(148,163,184,.19);border-radius:23px;padding:clamp(25px,4vw,38px);box-shadow:0 30px 100px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.045)}
+.account-panel:before{content:"";position:absolute;left:30px;right:30px;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(96,165,250,.7),rgba(34,211,238,.5),transparent)}
+.account-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#080e1a;border:1px solid rgba(148,163,184,.14);padding:5px;border-radius:12px;margin-bottom:27px}
+.account-tabs button{border:0;background:transparent;color:#8995a9;padding:12px 10px;border-radius:9px;font:600 13px Inter,sans-serif;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+.account-tabs button.active{background:#17243a;color:#f5f7fa;box-shadow:0 3px 12px rgba(0,0,0,.22)}
+.account-form{display:grid;gap:17px}
+.account-form label{font:600 11px Inter,sans-serif;letter-spacing:.035em;color:#b4bfd0;display:block;margin-bottom:8px}
+.account-form input{width:100%;min-height:49px;padding:13px 15px;border-radius:11px;border:1px solid rgba(148,163,184,.2);background:#090f1b;color:#f5f7fa;font:14px Inter,sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.account-form input::placeholder{color:#68758a}
+.account-form input:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,246,.13)}
+.account-action{width:100%;min-height:50px;display:flex;align-items:center;justify-content:center;gap:12px;border-radius:11px;padding:14px 18px;font-weight:700;letter-spacing:.01em;box-shadow:0 10px 28px rgba(37,99,235,.2);transition:transform .2s,box-shadow .2s}
+.account-action:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(37,99,235,.3)}
+.account-action:disabled{opacity:.65;cursor:wait;transform:none}
+.account-divider{display:flex;align-items:center;gap:13px;color:#78859a;font:500 9px 'JetBrains Mono',monospace;letter-spacing:.13em;margin:24px 0 18px}
+.account-divider:before,.account-divider:after{content:"";height:1px;background:rgba(148,163,184,.17);flex:1}
+#googleButton{display:flex;justify-content:center;align-items:center;min-height:48px;padding:2px;border:1px solid rgba(148,163,184,.16);background:rgba(255,255,255,.025);border-radius:12px;transition:border-color .2s,background .2s}
+#googleButton:hover{border-color:rgba(96,165,250,.45);background:rgba(59,130,246,.05)}
+.account-message{font-size:12px;line-height:1.55;margin-top:13px;color:#67e8f9;min-height:18px}
+.account-message.error{color:#fb923c}
+.account-panel>p:last-child{font-size:10px!important;color:#7f8ba0!important;margin-top:22px!important;line-height:1.7!important;text-align:center}
+.account-dashboard{display:none;grid-column:1/-1;width:100%}
+.dashboard-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.dashboard-top h2{font:600 30px 'Space Grotesk',sans-serif;color:#f5f7fa}
+.dashboard-top p{color:#93a0b4;font-size:13px;margin-top:6px}
+.dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.dash-card{background:linear-gradient(145deg,rgba(20,30,49,.94),rgba(10,16,29,.96));border:1px solid rgba(148,163,184,.17);border-radius:17px;padding:24px;min-width:0;box-shadow:0 14px 35px rgba(0,0,0,.15)}
+.dash-card h3{font:600 16px 'Space Grotesk',sans-serif;color:#e9eef7;margin-bottom:17px}
+.dash-card h3 i{color:#67e8f9;margin-right:8px}
+.dash-list{display:grid;gap:10px}
+.dash-item{padding:14px;border:1px solid rgba(148,163,184,.15);background:rgba(4,9,18,.28);border-radius:11px}
+.dash-item strong{display:block;font-size:13px;color:#e8edf6}
+.dash-item small{color:#8b98ac;font-size:11px;display:inline-block;margin-top:5px}
+.dash-item button{margin-top:10px}
+.empty-state{color:#8794a8;font-size:12px;padding:14px 0;line-height:1.6}
+.save-project{border:1px solid rgba(96,165,250,.28);background:rgba(59,130,246,.08);color:#93c5fd;padding:8px 11px;border-radius:8px;cursor:pointer;font:600 11px Inter,sans-serif;transition:background .2s}
+.save-project:hover{background:rgba(59,130,246,.17)}
+.profile-row{display:flex;gap:9px}
+.profile-row input{min-width:0;flex:1;background:#090f1b;border:1px solid rgba(148,163,184,.2);border-radius:9px;padding:11px 12px;color:#f5f7fa}
+.profile-row .btn{border-radius:9px}
+@media(max-width:850px){.account-shell{grid-template-columns:1fr;max-width:570px;gap:35px}.account-heading{max-width:none;text-align:center}.account-brand{justify-content:center;margin-bottom:27px}.account-heading .eyebrow{justify-content:center}.account-heading h1{font-size:clamp(37px,8vw,54px);margin-top:17px}.account-heading>p{margin:auto}.account-benefits{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 18px;margin-top:23px}.account-benefits span{font-size:11px}.account-benefits i{width:26px;height:26px}.account-dashboard{grid-column:1}}
+@media(max-width:600px){.account-page{padding:35px 0 65px;min-height:calc(100vh - 120px)}.account-shell{padding:0 17px;gap:28px}.account-brand{margin-bottom:24px}.account-brand img{width:45px;height:45px;border-radius:13px}.account-heading h1{font-size:39px;letter-spacing:-.045em}.account-heading>p{font-size:13px;line-height:1.7}.account-benefits{display:grid;justify-content:start;width:max-content;max-width:100%;margin:21px auto 0;gap:9px}.account-panel{padding:23px 19px;border-radius:18px}.account-form{gap:15px}.account-form input{min-height:48px}.dashboard-grid{grid-template-columns:1fr}.dashboard-top{align-items:flex-start}.dashboard-top h2{font-size:25px}.dash-card{padding:19px}.profile-row{flex-wrap:wrap}.profile-row input{flex-basis:100%}.profile-row .btn{width:100%;justify-content:center}}
+@media(prefers-reduced-motion:reduce){.account-action,.account-tabs button,#googleButton,.save-project{transition:none}}
 </style></head>
 <body>
 <header><div class="header-inner"><a href="/" class="logo"><img src="/assets/logo.jpg" alt="Boatek Labs"><span class="bracket">&lt;</span>BOATEK LABS<span class="bracket">&gt;</span></a><a class="btn btn-ghost" href="/">Back to site</a></div></header>
 <main class="account-page"><div class="account-shell">
-<div class="account-heading"><div class="eyebrow"><span class="line"></span>YOUR BOATEK WORKSPACE<span class="line"></span></div><h1>Your work, in one place.</h1><p>Create an account to save projects and follow your requests.</p></div>
+<div class="account-heading">
+<div class="account-brand"><img src="/assets/logo.jpg" alt="Boatek Labs logo"><div><span>BOATEK LABS</span><small>DESIGN · ENGINEERING · INNOVATION</small></div></div>
+<div class="eyebrow"><span class="line"></span>YOUR BOATEK WORKSPACE<span class="line"></span></div>
+<h1>Good ideas deserve<br><span>great execution.</span></h1>
+<p>Sign in to keep your projects close, save the work you love and follow every request in one focused workspace.</p>
+<div class="account-benefits"><span><i class="fas fa-bookmark"></i> Save projects you like</span><span><i class="fas fa-layer-group"></i> Track your requests</span><span><i class="fas fa-user-shield"></i> Your own private account</span></div>
+</div>
 <section class="account-panel" id="authPanel">
 <div class="account-tabs"><button type="button" class="active" data-mode="register">Create account</button><button type="button" data-mode="login">Sign in</button></div>
 <form class="account-form" id="accountForm">
