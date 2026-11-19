@@ -765,43 +765,26 @@ header .header-inner .mobile-nav-toggle{pointer-events:auto}
 }
 
 
-/* Subtle background logo treatment: softly faded into the hero */
-.hero-visual{
-  position:relative;
-  isolation:isolate;
-}
+/* Softly faded hero mark — visible without overpowering the copy */
+.hero-visual{position:relative;isolation:isolate}
 .hero-main-logo{
-  position:relative;
-  z-index:-1;
-  width:clamp(340px,39vw,490px);
-  opacity:.22;
-  filter:blur(1.2px) saturate(.72);
-  -webkit-mask-image:radial-gradient(ellipse 66% 65% at 50% 50%,#000 36%,rgba(0,0,0,.88) 56%,rgba(0,0,0,.35) 78%,transparent 100%);
-  mask-image:radial-gradient(ellipse 66% 65% at 50% 50%,#000 36%,rgba(0,0,0,.88) 56%,rgba(0,0,0,.35) 78%,transparent 100%);
-  mix-blend-mode:screen;
-  pointer-events:none;
+  position:relative;z-index:1;width:clamp(340px,39vw,490px);opacity:.42;
+  filter:blur(.55px) saturate(.92);
+  -webkit-mask-image:radial-gradient(ellipse 70% 68% at 50% 50%,#000 42%,rgba(0,0,0,.92) 62%,rgba(0,0,0,.38) 82%,transparent 100%);
+  mask-image:radial-gradient(ellipse 70% 68% at 50% 50%,#000 42%,rgba(0,0,0,.92) 62%,rgba(0,0,0,.38) 82%,transparent 100%);
+  mix-blend-mode:screen;pointer-events:none
 }
-.hero-visual:before{
-  content:"";
-  position:absolute;
-  z-index:0;
-  inset:8%;
-  border-radius:50%;
-  background:radial-gradient(ellipse at center,rgba(18,76,145,.12),rgba(7,13,25,0) 68%);
-  pointer-events:none;
-}
-@media(max-width:650px){
- .hero-main-logo{width:min(78vw,290px);opacity:.18;filter:blur(1px) saturate(.7)}
-}
+.hero-visual:before{content:"";position:absolute;z-index:0;inset:8%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(18,76,145,.10),rgba(7,13,25,0) 68%);pointer-events:none}
+@media(max-width:650px){.hero-main-logo{width:min(78vw,290px);opacity:.34;filter:blur(.45px) saturate(.9)}}
 
-
-/* Compact round theme control and signed-in account identity */
-#themeToggle.theme-toggle{width:40px;height:40px;min-width:40px;padding:0;margin-left:auto;display:inline-grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--surface,rgba(255,255,255,.04));color:var(--text);font-size:15px;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
-#themeToggle.theme-toggle:hover{border-color:var(--cyan);background:rgba(34,211,238,.08);color:var(--cyan);transform:translateY(-1px)}
-header .header-inner{gap:14px}
-header .header-inner #themeToggle{margin-left:auto}
-header .topbar #themeToggle{display:none!important}
-.nav-account-control{display:inline-flex!important;align-items:center;gap:9px;text-decoration:none!important}
+/* Round theme control sits at the far right of the header, outside the nav hit-area */
+#themeToggle.theme-toggle{position:absolute;z-index:95;top:41px;right:calc(3% + 14px);width:40px;height:40px;min-width:40px;padding:0;margin:0;display:inline-grid;place-items:center;border:1px solid rgba(148,163,184,.35);border-radius:50%;background:rgba(8,17,34,.88);color:#f5f7fa;font-size:15px;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+#themeToggle.theme-toggle:hover{border-color:var(--cyan);background:rgba(34,211,238,.12);color:var(--cyan);transform:translateY(-1px)}
+header nav.primary{padding-right:68px}
+.nav-account-control{display:inline-flex!important;align-items:center;justify-content:center;text-decoration:none!important}
 .nav-account-photo,.nav-account-initials{width:32px;height:32px;flex:0 0 32px;border-radius:50%;display:grid;place-items:center;object-fit:cover;border:1px solid rgba(148,163,184,.35);background:#17243a;color:#dbeafe;font-size:11px;font-weight:700}
-.nav-account-label{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media(max-width:900px){header .header-inner #themeToggle{margin-left:auto}.nav-account-control{align-self:flex-start}.nav-account-label{max-width:180px}}
+@media(max-width:900px){
+ #themeToggle.theme-toggle{top:21px;right:76px;width:38px;height:38px;min-width:38px}
+ header nav.primary{padding-right:14px}
+ .nav-account-control{align-self:flex-start}
+}
