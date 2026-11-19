@@ -26,6 +26,7 @@
       toggle.classList.remove('theme-switched');
       void toggle.offsetWidth;
       toggle.classList.add('theme-switched');
+      window.setTimeout(() => toggle.classList.remove('theme-switched'), 360);
     });
   });
   function updateToggleIcon(theme){
