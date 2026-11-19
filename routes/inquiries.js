@@ -10,6 +10,7 @@ const JsonStore = require('../lib/jsonStore');
 const { sendMail } = require('../lib/mailer');
 const { renderEmail } = require('../lib/emailTemplates');
 const { buildUrl } = require('../lib/siteUrl');
+const { getRequestUser } = require('../lib/userAuth');
 
 const router = express.Router();
 
@@ -43,8 +44,10 @@ router.post('/project', async (req, res) => {
     return res.status(400).json({ error: 'Please provide a valid email address.' });
   }
 
+  const accountUser = await getRequestUser(req).catch(() => null);
   const record = {
     id: makeId(),
+    userId: accountUser?.id || null,
     projectType: (projectType || 'Not specified').slice(0, 100),
     name: String(name).slice(0, 200),
     email: String(email).slice(0, 200),
@@ -198,8 +201,10 @@ router.post('/collaborate', async (req, res) => {
     return res.status(400).json({ error: 'Please provide a valid email address.' });
   }
 
+  const accountUser = await getRequestUser(req).catch(() => null);
   const record = {
     id: makeId(),
+    userId: accountUser?.id || null,
     organization: (organization || 'Not provided').slice(0, 200),
     contactName: String(contactName).slice(0, 200),
     email: String(email).slice(0, 200),
