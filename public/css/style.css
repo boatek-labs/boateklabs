@@ -816,3 +816,46 @@ header nav.primary .nav-item.account-nav-item>a:hover{background:rgba(148,163,18
 @media(min-width:901px){
  #themeToggle.theme-toggle{right:1.4%;top:41px}
 }
+
+
+/* Theme control alignment and restrained theme-change motion */
+#themeToggle.theme-toggle{
+  top:34px;
+  right:1.5%;
+  width:38px;
+  height:38px;
+  min-width:38px;
+  padding:0;
+  line-height:1;
+  border-radius:50%;
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease;
+}
+#themeToggle.theme-toggle:hover{transform:none}
+#themeToggle.theme-toggle i{
+  display:block;
+  line-height:1;
+  transition:transform .22s ease,opacity .18s ease;
+}
+#themeToggle.theme-toggle.theme-switched i{
+  animation:themeIconNudge .32s ease both;
+}
+@keyframes themeIconNudge{
+  0%{transform:rotate(-12deg) scale(.92);opacity:.65}
+  65%{transform:rotate(8deg) scale(1.08);opacity:1}
+  100%{transform:rotate(0) scale(1)}
+}
+/* Animate only paint properties: no layout shifts or temporary blank spacing. */
+body,header,.hero,section,footer,.work-card,.pillar,.process-panel{
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+}
+@media(min-width:901px){
+  header nav.primary{right:calc(1.5% + 48px);padding-right:8px}
+}
+@media(max-width:900px){
+  #themeToggle.theme-toggle{top:18px;right:68px;width:36px;height:36px;min-width:36px}
+  header nav.primary{right:15px;left:15px;padding:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  #themeToggle.theme-toggle,#themeToggle.theme-toggle i,body,header,.hero,section,footer,.work-card,.pillar,.process-panel{transition:none!important}
+  #themeToggle.theme-toggle.theme-switched i{animation:none!important}
+}
