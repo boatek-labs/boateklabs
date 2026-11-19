@@ -10,6 +10,9 @@ window.handleAccountGoogle=googleCredential;
 async function initGoogle(){try{const cfg=await api('/api/auth/config');if(!cfg.googleClientId)return;if(!window.google?.accounts?.id){setTimeout(initGoogle,300);return;}google.accounts.id.initialize({client_id:cfg.googleClientId,callback:googleCredential,auto_select:false});google.accounts.id.renderButton($('googleButton'),{type:'standard',theme:'outline',size:'large',shape:'pill',text:'continue_with',width:320,logo_alignment:'left'});}catch(e){console.warn('Google sign-in unavailable',e);}}
 async function showDashboard(nextUser){
  user=nextUser;
+ $('authPanel').hidden=true;
+ $('accountDashboard').hidden=false;
+ document.body.classList.add('account-authenticated');
  $('authPanel').style.display='none';
  $('accountDashboard').style.display='block';
  $('welcomeName').textContent='Welcome, '+(user.name||'there');
@@ -34,6 +37,6 @@ function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 document.addEventListener('click',async e=>{const save=e.target.closest('[data-save]'),remove=e.target.closest('[data-remove]');if(!save&&!remove)return;const id=(save||remove).dataset[save?'save':'remove'];try{if(save)await api('/api/auth/saved-projects',{method:'POST',body:JSON.stringify({projectId:id})});else await api('/api/auth/saved-projects/'+encodeURIComponent(id),{method:'DELETE'});await loadDashboard();}catch(err){alert(err.message);}});
 $('profileForm').addEventListener('submit',async e=>{e.preventDefault();try{const d=await api('/api/auth/profile',{method:'PATCH',body:JSON.stringify({name:$('profileName').value})});user=d.user;$('welcomeName').textContent='Welcome, '+user.name;message('profileMessage','Profile updated.');}catch(err){message('profileMessage',err.message,true);}});
 $('logoutButton').addEventListener('click',async()=>{try{await api('/api/auth/logout',{method:'POST',body:'{}'});}finally{location.reload();}});
-async function init(){try{const d=await api('/api/auth/session');if(d.authenticated)await showDashboard(d.user);else initGoogle();}catch(e){message('accountMessage','Account service is temporarily unavailable. Please try again.',true);}}
+async function init(){try{const d=await api('/api/auth/session');if(d.authenticated&&d.user){await showDashboard(d.user);return;}user=null;$('authPanel').hidden=false;$('authPanel').style.display='';$('accountDashboard').hidden=true;$('accountDashboard').style.display='none';initGoogle();}catch(e){$('authPanel').hidden=false;$('accountDashboard').hidden=true;message('accountMessage','Account service is temporarily unavailable. Please try again.',true);}}
 init();
 })();
