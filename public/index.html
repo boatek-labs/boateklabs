@@ -53,9 +53,9 @@
   </div>
   <div class="header-inner">
     <a href="index.html" class="logo"><img src="assets/logo.jpg" alt="Boatek Labs"><span class="bracket">&lt;</span>BOATEK LABS<span class="bracket">&gt;</span></a>
-    <button class="mobile-nav-toggle" onclick="toggleMobileNav()"><i class="fas fa-bars"></i></button>
+    <button class="mobile-nav-toggle" type="button" aria-label="Open navigation" aria-controls="primaryNavigation" aria-expanded="false" onclick="toggleMobileNav()"><i class="fas fa-bars"></i></button>
   </div>
-  <nav class="primary">
+  <nav class="primary" id="primaryNavigation">
     <div class="nav-item" onclick="toggleMobileSubmenu(this)"><a href="team.html#story">Studio</a>
       <div class="mega">
         <h4>Studio</h4><div class="accent-line"></div>
