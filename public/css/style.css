@@ -763,3 +763,33 @@ header .header-inner .mobile-nav-toggle{pointer-events:auto}
  .hero-ctas .btn{width:100%;justify-content:center}
  .hero-main-logo{width:min(68vw,225px)}
 }
+
+
+/* Subtle background logo treatment: softly faded into the hero */
+.hero-visual{
+  position:relative;
+  isolation:isolate;
+}
+.hero-main-logo{
+  position:relative;
+  z-index:-1;
+  width:clamp(340px,39vw,490px);
+  opacity:.22;
+  filter:blur(1.2px) saturate(.72);
+  -webkit-mask-image:radial-gradient(ellipse 66% 65% at 50% 50%,#000 36%,rgba(0,0,0,.88) 56%,rgba(0,0,0,.35) 78%,transparent 100%);
+  mask-image:radial-gradient(ellipse 66% 65% at 50% 50%,#000 36%,rgba(0,0,0,.88) 56%,rgba(0,0,0,.35) 78%,transparent 100%);
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+.hero-visual:before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:8%;
+  border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(18,76,145,.12),rgba(7,13,25,0) 68%);
+  pointer-events:none;
+}
+@media(max-width:650px){
+ .hero-main-logo{width:min(78vw,290px);opacity:.18;filter:blur(1px) saturate(.7)}
+}
