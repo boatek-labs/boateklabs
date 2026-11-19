@@ -893,3 +893,19 @@ body,header,.hero,section,footer,.work-card,.pillar,.process-panel{
 .journal-feature-card>a i{margin-left:6px;font-size:10px}
 .featured-journal-footer{display:flex;justify-content:center;margin-top:30px}
 @media(max-width:650px){.featured-journal-grid{grid-template-columns:1fr}.journal-feature-card{min-height:225px;padding:22px}.journal-feature-card h3{margin-top:24px}.journal-feature-meta{font-size:8px}}
+
+
+/* Selected project stories in Featured Work and the Work index */
+.live-project-description{margin:9px 0 0;color:var(--muted);font-size:12px;line-height:1.65}
+.selected-builds-heading{margin:38px 0 20px}
+.selected-builds-heading h3,.live-projects-heading h3{margin:9px 0 7px;font:600 clamp(22px,3vw,30px)/1.2 'Space Grotesk',sans-serif;letter-spacing:-.03em;color:var(--text)}
+.selected-builds-heading p{max-width:680px;margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+.selected-builds-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0 0 34px}
+.selected-build-card{display:flex;flex-direction:column;align-items:flex-start;min-height:220px;padding:25px;border:1px solid var(--line);border-radius:12px;background:var(--card-bg,#101827);text-decoration:none;transition:transform .2s ease,border-color .2s ease}
+.selected-build-card:hover{transform:translateY(-3px);border-color:var(--cyan)}
+.selected-build-card>span{font:500 9px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--muted)}
+.selected-build-card h3{margin:22px 0 8px;color:var(--text);font:600 24px 'Space Grotesk',sans-serif}
+.selected-build-card p{margin:0 0 20px;color:var(--muted);font-size:13px;line-height:1.7}
+.selected-build-card b{margin-top:auto;color:var(--cyan);font-size:11px}
+.selected-build-card b i{margin-left:5px}
+@media(max-width:650px){.selected-builds-grid{grid-template-columns:1fr}.selected-build-card{min-height:195px;padding:21px}}
