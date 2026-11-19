@@ -23,6 +23,9 @@
       else document.documentElement.removeAttribute('data-theme');
       localStorage.setItem('boatek-theme', next);
       updateToggleIcon(next);
+      toggle.classList.remove('theme-switched');
+      void toggle.offsetWidth;
+      toggle.classList.add('theme-switched');
     });
   });
   function updateToggleIcon(theme){
