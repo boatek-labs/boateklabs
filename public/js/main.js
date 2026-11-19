@@ -8,8 +8,13 @@
   const theme = saved || 'dark'; // default dark regardless of system preference
   if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
   document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.getElementById('themeToggle');
+    let toggle = document.getElementById('themeToggle');
+    const headerInner = document.querySelector('header .header-inner');
+    if (!toggle && headerInner) { toggle=document.createElement('button'); toggle.id='themeToggle'; toggle.type='button'; toggle.setAttribute('aria-label','Toggle colour theme'); headerInner.appendChild(toggle); }
     if (!toggle) return;
+    if (headerInner && toggle.parentElement !== headerInner) headerInner.appendChild(toggle);
+    toggle.classList.add('theme-toggle');
+    toggle.setAttribute('type','button');
     updateToggleIcon(theme);
     toggle.addEventListener('click', () => {
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
@@ -23,9 +28,9 @@
   function updateToggleIcon(theme){
     const toggle = document.getElementById('themeToggle');
     if (!toggle) return;
-    toggle.innerHTML = theme === 'light'
-      ? '<i class="fas fa-moon"></i> Dark'
-      : '<i class="fas fa-sun"></i> Light';
+    toggle.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+    toggle.setAttribute('aria-label',theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+    toggle.title=theme === 'light' ? 'Dark mode' : 'Light mode';
   }
 })();
 
@@ -716,3 +721,18 @@ if ('serviceWorker' in navigator){
     });
   });
 }
+
+
+// Customer account identity in the shared navigation
+document.addEventListener('DOMContentLoaded', async () => {
+ const nav=document.getElementById('primaryNavigation');if(!nav)return;
+ let control=nav.querySelector('.account-nav-link');
+ if(!control){control=document.createElement('a');control.href='/account.html';control.className='account-nav-link';control.innerHTML='<i class="fas fa-user-circle"></i><span>Account</span>';const item=document.createElement('div');item.className='nav-item account-nav-item';item.appendChild(control);nav.appendChild(item);}
+ control.classList.add('nav-account-control');
+ try{const r=await fetch('/api/auth/session',{credentials:'same-origin',headers:{Accept:'application/json'}});if(!r.ok)return;const d=await r.json();if(!d.authenticated||!d.user)return;
+ const u=d.user,label=u.name||u.email||'Account';control.href='/account.html';control.setAttribute('aria-label','Open account dashboard for '+label);control.title='Account: '+label;control.innerHTML='';
+ if(u.authProvider==='google'&&u.avatarUrl){const img=document.createElement('img');img.src=u.avatarUrl;img.alt='';img.referrerPolicy='no-referrer';img.className='nav-account-photo';control.appendChild(img);}
+ else{const badge=document.createElement('span');badge.className='nav-account-initials';badge.textContent=label.trim().split(/\\s+/).slice(0,2).map(s=>s.charAt(0)).join('').toUpperCase();control.appendChild(badge);}
+ const name=document.createElement('span');name.className='nav-account-label';name.textContent=label.split(/\\s+/)[0];control.appendChild(name);
+ }catch(e){console.warn('[account-nav] session lookup failed',e);}
+});
