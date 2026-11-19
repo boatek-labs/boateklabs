@@ -879,3 +879,17 @@ body,header,.hero,section,footer,.work-card,.pillar,.process-panel{
 .live-project-info>a i{margin-left:5px}
 @media(max-width:650px){.live-project-grid{grid-template-columns:1fr;gap:16px}.live-project-preview{height:230px}.live-projects-heading{margin-top:42px}.live-project-info{padding:15px}}
 @media(prefers-reduced-motion:reduce){.live-project-card{transition:none}}
+
+
+/* Featured journal — editorial cards with restrained studio styling */
+.featured-journal-section .section-head>p{max-width:620px}
+.featured-journal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.journal-feature-card{min-width:0;min-height:255px;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;align-items:flex-start;border:1px solid var(--line);border-radius:13px;background:var(--card-bg,#101827)}
+.journal-feature-card.journal-feature-wide{background:linear-gradient(125deg,rgba(23,105,210,.13),transparent 70%),var(--card-bg,#101827)}
+.journal-feature-meta{width:100%;display:flex;justify-content:space-between;gap:12px;color:var(--muted);font:500 9px 'JetBrains Mono',monospace;letter-spacing:.12em}
+.journal-feature-card h3{max-width:520px;margin:30px 0 12px;color:var(--text);font:600 clamp(21px,2.5vw,29px)/1.2 'Space Grotesk',sans-serif;letter-spacing:-.035em}
+.journal-feature-card p{max-width:590px;margin:0 0 24px;color:var(--muted);font-size:14px;line-height:1.75}
+.journal-feature-card>a{margin-top:auto;color:var(--cyan);font-size:12px;font-weight:600;text-decoration:none}
+.journal-feature-card>a i{margin-left:6px;font-size:10px}
+.featured-journal-footer{display:flex;justify-content:center;margin-top:30px}
+@media(max-width:650px){.featured-journal-grid{grid-template-columns:1fr}.journal-feature-card{min-height:225px;padding:22px}.journal-feature-card h3{margin-top:24px}.journal-feature-meta{font-size:8px}}
