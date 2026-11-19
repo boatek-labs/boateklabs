@@ -9,10 +9,10 @@
   if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
   document.addEventListener('DOMContentLoaded', () => {
     let toggle = document.getElementById('themeToggle');
-    const headerInner = document.querySelector('header .header-inner');
-    if (!toggle && headerInner) { toggle=document.createElement('button'); toggle.id='themeToggle'; toggle.type='button'; toggle.setAttribute('aria-label','Toggle colour theme'); headerInner.appendChild(toggle); }
+    const header = document.querySelector('header');
+    if (!toggle && header) { toggle=document.createElement('button'); toggle.id='themeToggle'; toggle.type='button'; toggle.setAttribute('aria-label','Toggle colour theme'); header.appendChild(toggle); }
     if (!toggle) return;
-    if (headerInner && toggle.parentElement !== headerInner) headerInner.appendChild(toggle);
+    if (header && toggle.parentElement !== header) header.appendChild(toggle);
     toggle.classList.add('theme-toggle');
     toggle.setAttribute('type','button');
     updateToggleIcon(theme);
@@ -730,9 +730,9 @@ document.addEventListener('DOMContentLoaded', async () => {
  if(!control){control=document.createElement('a');control.href='/account.html';control.className='account-nav-link';control.innerHTML='<i class="fas fa-user-circle"></i><span>Account</span>';const item=document.createElement('div');item.className='nav-item account-nav-item';item.appendChild(control);nav.appendChild(item);}
  control.classList.add('nav-account-control');
  try{const r=await fetch('/api/auth/session',{credentials:'same-origin',headers:{Accept:'application/json'}});if(!r.ok)return;const d=await r.json();if(!d.authenticated||!d.user)return;
- const u=d.user,label=u.name||u.email||'Account';control.href='/account.html';control.setAttribute('aria-label','Open account dashboard for '+label);control.title='Account: '+label;control.innerHTML='';
+ const u=d.user,label=u.name||u.email||'Account';control.href='/account.html';control.setAttribute('aria-label','Open account dashboard');control.title='Account';control.innerHTML='';
  if(u.authProvider==='google'&&u.avatarUrl){const img=document.createElement('img');img.src=u.avatarUrl;img.alt='';img.referrerPolicy='no-referrer';img.className='nav-account-photo';control.appendChild(img);}
  else{const badge=document.createElement('span');badge.className='nav-account-initials';badge.textContent=label.trim().split(/\\s+/).slice(0,2).map(s=>s.charAt(0)).join('').toUpperCase();control.appendChild(badge);}
- const name=document.createElement('span');name.className='nav-account-label';name.textContent=label.split(/\\s+/)[0];control.appendChild(name);
+
  }catch(e){console.warn('[account-nav] session lookup failed',e);}
 });
