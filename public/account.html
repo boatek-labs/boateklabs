@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account — Boatek Labs</title><meta name="description" content="Create your Boatek Labs account, save projects and track your studio requests.">
+<meta name="theme-color" content="#070B14"><link rel="icon" href="/assets/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+.account-page{min-height:75vh;padding:64px 0 100px;background:radial-gradient(ellipse at 50% 0,rgba(59,130,246,.12),transparent 50%)}
+.account-shell{max-width:1040px;margin:auto;padding:0 24px}
+.account-heading{text-align:center;margin-bottom:38px}.account-heading .eyebrow{justify-content:center}.account-heading h1{font-size:clamp(32px,5vw,48px);margin-bottom:10px}.account-heading p{color:var(--muted)}
+.account-panel{max-width:490px;margin:auto;background:var(--card-bg);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,4vw,36px);box-shadow:0 24px 80px rgba(0,0,0,.22)}
+.account-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--navy);border:1px solid var(--line);padding:5px;border-radius:11px;margin-bottom:24px}
+.account-tabs button{border:0;background:transparent;color:var(--muted);padding:11px;border-radius:8px;font-weight:600;cursor:pointer}.account-tabs button.active{background:var(--darkblue);color:var(--text)}
+.account-form{display:grid;gap:14px}.account-form label{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}.account-form input{width:100%;padding:13px 14px;border-radius:9px;border:1px solid var(--line);background:var(--navy);color:var(--text);font:inherit;outline:none}.account-form input:focus{border-color:var(--cyan)}
+.account-action{width:100%;justify-content:center;border-radius:9px;padding:13px}.account-divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:11px;margin:20px 0}.account-divider:before,.account-divider:after{content:"";height:1px;background:var(--line);flex:1}
+#googleButton{display:flex;justify-content:center;min-height:44px}.account-message{font-size:13px;margin-top:14px;color:var(--cyan);min-height:20px}.account-message.error{color:#fb923c}
+.account-dashboard{display:none}.dashboard-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap}.dashboard-top h2{font-size:25px}.dashboard-top p{color:var(--muted);font-size:13px}.dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.dash-card{background:var(--card-bg);border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0}.dash-card h3{font-size:17px;margin-bottom:14px}.dash-list{display:grid;gap:10px}.dash-item{padding:13px;border:1px solid var(--line);border-radius:9px}.dash-item strong{display:block;font-size:13px}.dash-item small{color:var(--muted)}.dash-item button{margin-top:9px}.empty-state{color:var(--muted);font-size:13px;padding:14px 0}.save-project{border:1px solid var(--line);background:transparent;color:var(--cyan);padding:7px 10px;border-radius:7px;cursor:pointer;font-size:12px}.profile-row{display:flex;gap:8px}.profile-row input{min-width:0;flex:1;background:var(--navy);border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--text)}
+@media(max-width:700px){.account-page{padding:44px 0 70px}.dashboard-grid{grid-template-columns:1fr}.account-shell{padding:0 16px}.account-panel{padding:22px}.dashboard-top{align-items:flex-start}}
+</style></head>
+<body>
+<header><div class="header-inner"><a href="/" class="logo"><img src="/assets/logo.jpg" alt="Boatek Labs"><span class="bracket">&lt;</span>BOATEK LABS<span class="bracket">&gt;</span></a><a class="btn btn-ghost" href="/">Back to site</a></div></header>
+<main class="account-page"><div class="account-shell">
+<div class="account-heading"><div class="eyebrow"><span class="line"></span>YOUR BOATEK WORKSPACE<span class="line"></span></div><h1>Your work, in one place.</h1><p>Create an account to save projects and follow your requests.</p></div>
+<section class="account-panel" id="authPanel">
+<div class="account-tabs"><button type="button" class="active" data-mode="register">Create account</button><button type="button" data-mode="login">Sign in</button></div>
+<form class="account-form" id="accountForm">
+<div id="nameField"><label for="accountName">Full name</label><input id="accountName" autocomplete="name" minlength="2" required></div>
+<div><label for="accountEmail">Email address</label><input id="accountEmail" type="email" autocomplete="email" required></div>
+<div><label for="accountPassword">Password</label><input id="accountPassword" type="password" autocomplete="new-password" minlength="10" required></div>
+<button class="btn btn-primary account-action" id="submitAccount" type="submit">Create account <i class="fas fa-arrow-right"></i></button>
+</form><div class="account-divider">OR CONTINUE WITH</div><div id="googleButton"></div>
+<p class="account-message" id="accountMessage" role="status"></p>
+<p style="font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6">By creating an account, you agree to use the workspace responsibly. Your account is separate from the administrator sign-in.</p>
+</section>
+<section class="account-dashboard" id="accountDashboard">
+<div class="dashboard-top"><div><h2 id="welcomeName">Your workspace</h2><p id="accountEmailDisplay"></p></div><button class="btn btn-ghost" id="logoutButton"><i class="fas fa-arrow-right-from-bracket"></i> Sign out</button></div>
+<div class="dashboard-grid">
+<div class="dash-card"><h3><i class="fas fa-user-pen"></i> Profile</h3><form id="profileForm" class="profile-row"><input id="profileName" aria-label="Your name" minlength="2" maxlength="100" required><button class="btn btn-primary" type="submit">Save</button></form><p class="account-message" id="profileMessage"></p></div>
+<div class="dash-card"><h3><i class="fas fa-bookmark"></i> Saved projects</h3><div class="dash-list" id="savedProjects"><p class="empty-state">Loading saved projects…</p></div></div>
+<div class="dash-card"><h3><i class="fas fa-compass"></i> Discover projects</h3><div class="dash-list" id="discoverProjects"><p class="empty-state">Loading projects…</p></div></div>
+<div class="dash-card"><h3><i class="fas fa-inbox"></i> Your requests</h3><div class="dash-list" id="accountActivity"><p class="empty-state">Loading activity…</p></div></div>
+</div></section>
+</div></main>
+<footer><div class="wrap"><div class="footer-bottom"><span class="mono">© 2026 Boatek Labs</span><a href="/privacy.html">Privacy</a></div></div></footer>
+<script src="https://accounts.google.com/gsi/client" async defer></script><script src="/js/account.js"></script>
+</body></html>
