@@ -30,13 +30,38 @@
 })();
 
 // ---------- Mobile nav toggle ----------
-function toggleMobileNav(){
-  document.querySelector('nav.primary').classList.toggle('open');
+function toggleMobileNav(force){
+  const nav=document.getElementById('primaryNavigation');
+  const button=document.querySelector('.mobile-nav-toggle');
+  if(!nav||!button)return;
+  const isOpen=typeof force==='boolean'?force:!nav.classList.contains('open');
+  nav.classList.toggle('open',isOpen);
+  button.setAttribute('aria-expanded',String(isOpen));
+  button.setAttribute('aria-label',isOpen?'Close navigation':'Open navigation');
+  const icon=button.querySelector('i');
+  if(icon)icon.className=isOpen?'fas fa-xmark':'fas fa-bars';
+  document.body.classList.toggle('navigation-open',isOpen);
 }
 function toggleMobileSubmenu(el){
-  if (window.innerWidth > 900) return;
-  el.classList.toggle('open');
+  if(window.innerWidth>900)return;
+  const wasOpen=el.classList.contains('open');
+  document.querySelectorAll('nav.primary .nav-item.open').forEach(item=>item.classList.remove('open'));
+  el.classList.toggle('open',!wasOpen);
 }
+document.addEventListener('DOMContentLoaded',()=>{
+  const nav=document.getElementById('primaryNavigation');
+  const button=document.querySelector('.mobile-nav-toggle');
+  if(!nav||!button)return;
+  nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
+    if(window.innerWidth<=900)toggleMobileNav(false);
+  }));
+  document.addEventListener('click',event=>{
+    if(window.innerWidth>900||!nav.classList.contains('open'))return;
+    if(!nav.contains(event.target)&&!button.contains(event.target))toggleMobileNav(false);
+  });
+  document.addEventListener('keydown',event=>{if(event.key==='Escape')toggleMobileNav(false);});
+  window.addEventListener('resize',()=>{if(window.innerWidth>900)toggleMobileNav(false);});
+});
 
 // ---------- Tabs (Services / What We Build / Case Studies) ----------
 function showTab(name, el){
