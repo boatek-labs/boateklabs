@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 
 const inquiriesRoute = require('./routes/inquiries');
+const authRoute = require('./routes/auth');
 const newsletterRoute = require('./routes/newsletter');
 const messageRoute = require('./routes/message');
 const configRoute = require('./routes/config');
@@ -76,6 +77,7 @@ const analyticsLimiter = rateLimit({
   legacyHeaders: false
 });
 
+app.use('/api/auth', apiLimiter, authRoute);
 app.use('/api/contact', apiLimiter, inquiriesRoute);
 app.use('/api/newsletter', apiLimiter, newsletterRoute);
 app.use('/api/message', apiLimiter, messageRoute);
