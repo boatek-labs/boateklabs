@@ -8,8 +8,28 @@ $('accountForm').addEventListener('submit',async e=>{e.preventDefault();const bu
 async function googleCredential(response){try{message('accountMessage','Signing in with Google…');const d=await api('/api/auth/google',{method:'POST',body:JSON.stringify({credential:response.credential})});await showDashboard(d.user);}catch(e){message('accountMessage',e.message,true);}}
 window.handleAccountGoogle=googleCredential;
 async function initGoogle(){try{const cfg=await api('/api/auth/config');if(!cfg.googleClientId)return;if(!window.google?.accounts?.id){setTimeout(initGoogle,300);return;}google.accounts.id.initialize({client_id:cfg.googleClientId,callback:googleCredential,auto_select:false});google.accounts.id.renderButton($('googleButton'),{type:'standard',theme:'outline',size:'large',shape:'pill',text:'continue_with',width:320,logo_alignment:'left'});}catch(e){console.warn('Google sign-in unavailable',e);}}
-async function showDashboard(nextUser){user=nextUser;$('authPanel').style.display='none';$('accountDashboard').style.display='block';$('welcomeName').textContent='Welcome, '+(user.name||'there');$('accountEmailDisplay').textContent=user.email;$('profileName').value=user.name||'';await loadDashboard();}
-async function loadDashboard(){const [saved,activity,all]=await Promise.all([api('/api/auth/saved-projects'),api('/api/auth/activity'),api('/api/projects')]);projects=Array.isArray(all)?all:(all.projects||[]);const savedIds=new Set(saved.map(x=>x.id));const savedItems=projects.filter(p=>savedIds.has(p.id));$('savedProjects').innerHTML=savedItems.length?savedItems.map(p=>'<div class="dash-item"><strong>'+escapeHtml(p.title)+'</strong><small>'+escapeHtml(p.category||'Project')+'</small><br><button class="save-project" data-remove="'+escapeHtml(p.id)+'">Remove saved</button></div>').join(''):'<p class="empty-state">No saved projects yet. Explore projects below.</p>';$('discoverProjects').innerHTML=projects.slice(0,8).map(p=>'<div class="dash-item"><strong>'+escapeHtml(p.title)+'</strong><small>'+escapeHtml(p.category||'Project')+'</small><br><button class="save-project" data-save="'+escapeHtml(p.id)+'">'+(savedIds.has(p.id)?'Saved':'Save project')+'</button></div>').join('')||'<p class="empty-state">No published projects yet.</p>';$('accountActivity').innerHTML=activity.length?activity.map(a=>'<div class="dash-item"><strong>'+escapeHtml(a.title||a.type)+'</strong><small>'+escapeHtml(a.type)+' · '+new Date(a.receivedAt).toLocaleDateString()+' · '+escapeHtml(a.status)+'</small></div>').join(''):'<p class="empty-state">Your signed-in project and collaboration requests will appear here.</p>';}
+async function showDashboard(nextUser){
+ user=nextUser;
+ $('authPanel').style.display='none';
+ $('accountDashboard').style.display='block';
+ $('welcomeName').textContent='Welcome, '+(user.name||'there');
+ $('accountEmailDisplay').textContent=user.email;
+ $('profileName').value=user.name||'';
+ await loadDashboard();
+}
+async function loadDashboard(){
+ const results=await Promise.allSettled([api('/api/auth/saved-projects'),api('/api/auth/activity'),api('/api/projects')]);
+ const savedResult=results[0],activityResult=results[1],projectsResult=results[2];
+ const saved=savedResult.status==='fulfilled'?savedResult.value:[];
+ const activity=activityResult.status==='fulfilled'?activityResult.value:[];
+ const all=projectsResult.status==='fulfilled'?projectsResult.value:[];
+ projects=Array.isArray(all)?all:(all.projects||[]);
+ const savedIds=new Set(Array.isArray(saved)?saved.map(x=>x.id):[]);
+ const savedItems=projects.filter(p=>savedIds.has(p.id));
+ $('savedProjects').innerHTML=savedItems.length?savedItems.map(p=>'<div class="dash-item"><strong>'+escapeHtml(p.title)+'</strong><small>'+escapeHtml(p.category||'Project')+'</small><br><button class="save-project" data-remove="'+escapeHtml(p.id)+'">Remove saved</button></div>').join(''):(savedResult.status==='rejected'?'<p class="empty-state">Saved projects could not load. Refresh to try again.</p>':'<p class="empty-state">No saved projects yet. Explore projects below.</p>');
+ $('discoverProjects').innerHTML=projects.slice(0,8).map(p=>'<div class="dash-item"><strong>'+escapeHtml(p.title)+'</strong><small>'+escapeHtml(p.category||'Project')+'</small><br><button class="save-project" data-save="'+escapeHtml(p.id)+'">'+(savedIds.has(p.id)?'Saved':'Save project')+'</button></div>').join('')||(projectsResult.status==='rejected'?'<p class="empty-state">Projects could not load. Refresh to try again.</p>':'<p class="empty-state">No published projects yet.</p>');
+ $('accountActivity').innerHTML=Array.isArray(activity)&&activity.length?activity.map(a=>'<div class="dash-item"><strong>'+escapeHtml(a.title||a.type)+'</strong><small>'+escapeHtml(a.type)+' · '+(a.receivedAt?new Date(a.receivedAt).toLocaleDateString():'Recently')+' · '+escapeHtml(a.status||'Received')+'</small></div>').join(''):(activityResult.status==='rejected'?'<p class="empty-state">Your request history could not load right now.</p>':'<p class="empty-state">Your signed-in project and collaboration requests will appear here.</p>');
+}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 document.addEventListener('click',async e=>{const save=e.target.closest('[data-save]'),remove=e.target.closest('[data-remove]');if(!save&&!remove)return;const id=(save||remove).dataset[save?'save':'remove'];try{if(save)await api('/api/auth/saved-projects',{method:'POST',body:JSON.stringify({projectId:id})});else await api('/api/auth/saved-projects/'+encodeURIComponent(id),{method:'DELETE'});await loadDashboard();}catch(err){alert(err.message);}});
 $('profileForm').addEventListener('submit',async e=>{e.preventDefault();try{const d=await api('/api/auth/profile',{method:'PATCH',body:JSON.stringify({name:$('profileName').value})});user=d.user;$('welcomeName').textContent='Welcome, '+user.name;message('profileMessage','Profile updated.');}catch(err){message('profileMessage',err.message,true);}});
